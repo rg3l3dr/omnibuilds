@@ -1,0 +1,78 @@
+
+-> Prepare AWS Environment
+	-> Setup & Provision EC2 Instance (ubuntu)
+	-> Setup RDS Instance (postgres)
+	-> Setup ELB
+	-> Congfigure Security Groups
+-> Configure virtual env
+-> Configure git repo
+-> Configure django project
+-> Serve django project with gunicorn
+
+	# Create a gunicorn upstart file to daeominze the gunicorn app
+
+	$ sudo vim /etc/init/gunicorn.conf
+
+	# proper config file
+
+	description "Gunicorn application server handling omnibuilds.com"
+
+	start on runlevel [2345]
+	stop on runlevel [!2345]
+
+	respawn
+	setuid ubuntu
+	setgid www-data
+
+	script
+
+	    cd home/ubuntu/omnibuilds
+	    . bin/activate
+	    cd omnibuilds/src
+	    gunicorn --workers 3 --bind unix:/home/ubuntu/omnibuilds/omnibuilds/src/omnibuilds.sock omnibuilds.wsgi:application
+
+	end script
+
+	# start the server to test
+	# ensure the virtualenv is activated
+
+	$ sudo service gunicorn start
+
+-> Reverse proxy gunicorn with nginix
+
+	# create an nginx conf
+
+	$ sudo vim /etc/nginx/sites-available/omnibuilds_nginx.conf
+
+	# proper nginx conf
+
+	server {
+            listen 80;
+            server_name 54.70.215.140;
+
+            location = /favicon.ico { access_log off; log_not_found off; }
+            location /static {
+                alias /home/ubuntu/omnibuilds/omnibuilds/www/static;
+            }
+
+            location / {
+                include proxy_params;
+                proxy_pass http://unix:/home/ubuntu/omnibuilds/omnibuilds/src/omnibuilds.sock;
+            }
+        }
+
+	# simlink the conf into sites enabled directory
+
+	$ sudo ln -s /etc/nginx/sites-available/omnibuilds_nginx.conf /etc/nginx/sites-enabled
+
+	# test the configuration
+
+	$ sudo nginx -t
+
+-> Serve nginix via AWS ELB
+
+
+-> Configure all for https
+
+
+
