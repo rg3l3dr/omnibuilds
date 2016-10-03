@@ -1,0 +1,44 @@
+{% load staticfiles %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8"> 
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+	<meta name= "description" content = "">
+	<meta name ="author" content = "">
+	<link rel="icon" href="{% static 'omnibuilds/ob_favicon.png' %}">
+
+	
+
+	
+	<title>{% block head_title %} OmniBuilds {% endblock %}</title>
+
+	{% include 'base/head_css.html' %}
+
+	<style>
+    	{% block style %}{% endblock %}
+ 	</style>
+
+ 	{% block head %}
+ 	{% endblock %}
+
+</head>
+<body>
+
+
+	{% include "base/navbar.html" %}
+
+	{% block content %}{% endblock %}
+
+
+	{% include "base/javascript.html" %}
+
+	{% block script %}{% endblock %}
+
+	{% block footer %}{% endblock %}
+
+</body>
+</html>	

@@ -1,0 +1,502 @@
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+
+
+
+<!DOCTYPE html>
+<html>
+<head>
+  <!-- Mobirise Free Bootstrap Template, https://mobirise.com -->
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="generator" content="Mobirise v2.6.1, mobirise.com">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="shortcut icon" href="assets/images/discover-mobile-350x350-16.png" type="image/x-icon">
+  <meta name="description" content="">
+  
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:700,400&amp;subset=cyrillic,latin,greek,vietnamese">
+  <link rel="stylesheet" href="{% static 'omnibuilds/assets/bootstrap/css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'omnibuilds/assets/mobirise/css/mbr-additional.css' %}">
+  <link rel="stylesheet" href="{% static 'omnibuilds/assets/mobirise/css/style.css' %}">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+  <!--
+  <link rel="stylesheet" href="{% static 'omnibuilds/assets/animate.css/animate.min.css' %}"> 
+  <link rel="stylesheet" href="{% static 'omnibuilds/assets/socicon/css/socicon.min.css' %}">
+  <link rel="stylesheet" href="{% static 'omnibuilds/assets/mobirise-slider/style.css' %}">
+  <link rel="stylesheet" href="{% static 'omnibuilds/assets/mobirise-gallery/style.css' %}">
+ -->
+  
+
+</head>
+<body>
+
+<section class="mbr-navbar mbr-navbar--freeze mbr-navbar--absolute mbr-navbar--transparent mbr-navbar--sticky mbr-navbar--auto-collapse" id="menu-74">
+    <div class="mbr-navbar__section mbr-section">
+        <div class="mbr-section__container container">
+            <div class="mbr-navbar__container">
+                <div class="mbr-navbar__column mbr-navbar__column--s mbr-navbar__brand">
+                    <span class="mbr-navbar__brand-link mbr-brand mbr-brand--inline">
+                        <span class="mbr-brand__logo"><a href="#">
+               				<i class="fa fa-cogs fa-2x" aria-hidden="true" style='color:white'> <span style='font-family:exo-medium'>OmniBuilds</span></i>
+                        </a></span>
+                    <!--     <span class="mbr-brand__name"><a href="#" style='font-family:exo;color:white'>OmniBuilds</a></span>
+                    </span> -->
+                </div>
+
+                <div class="mbr-navbar__hamburger mbr-hamburger text-white">
+                    <span class="mbr-hamburger__line"></span>
+                </div>
+                <div class="mbr-navbar__column mbr-navbar__menu">
+                    <nav class="mbr-navbar__menu-box mbr-navbar__menu-box--inline-right">
+                        <div class="mbr-navbar__column">
+                            <ul class="mbr-navbar__items mbr-navbar__items--right mbr-buttons mbr-buttons--right  mbr-buttons--active">
+                                <li class="mbr-navbar__item"><a class="mbr-buttons__link btn text-white" href="#features">FEATURES</a></li>
+                                <li class="mbr-navbar__item"><a class="mbr-buttons__link btn text-white" href="#pricing">PRICING</a></li>
+                                <li class="mbr-navbar__item"><a class="mbr-buttons__link btn text-white" href="#about">ABOUT</a></li>
+                                <!-- <li class="mbr-navbar__item"><a class="mbr-buttons__link btn text-white" href="blog.html">Demo</a></li></ul></div> -->
+                        <div class="mbr-navbar__column">
+                            <ul class="mbr-navbar__items mbr-navbar__items--right mbr-buttons mbr-buttons--freeze mbr-buttons--right btn-inverse mbr-buttons--active">
+          						<li class="mbr-navbar__item"><a class="mbr-buttons__btn btn btn-default" id="auth" href="{% url 'account_login' %}">SIGN IN</a><li>
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="mbr-box mbr-section mbr-section--relative mbr-section--fixed-size mbr-section--full-height mbr-section--bg-adapted mbr-parallax-background mbr-after-navbar" id="header1-73" style="background-image: url({% static 'omnibuilds/assets/images/teardown.png' %});">
+    <div class="mbr-box__magnet mbr-box__magnet--sm-padding mbr-box__magnet--center-left">
+        <div class="mbr-overlay" style="opacity: .91; background-color: rgb(76, 105, 114);"></div>
+        <div class="mbr-box__container mbr-section__container container">
+            <div class="mbr-box mbr-box--stretched"><div class="mbr-box__magnet mbr-box__magnet--center-left">
+                <div class="row">
+                    <div class=" col-sm-12 text-center">
+                        <div class="mbr-hero animated fadeInUp">
+                            <h1 class="mbr-hero__text" style='font-size:64px'>Hardware Design for Teams</h1>
+                            <br>
+                            <p class="mbr-hero__subtext" style='font-size:28px'>Collaborative revision control for every part, file and document in your project<br></p>
+                        </div>
+                        <div class="btn-inverse">
+                            <a class="mbr-buttons__btn btn btn-lg animated fadeInUp delay btn-success" data-toggle="modal" data-target="#betamodal">Request beta access</a>
+                            <a class="mbr-buttons__btn btn btn-lg animated fadeInUp delay btn-default" data-toggle="modal" data-target="#signupmodal">Notify me at launch</a>
+                        </div>
+                        	
+                    </div>
+                </div>
+            </div></div>
+        </div>
+        <div class="mbr-arrow mbr-arrow--floating text-center">
+            <div class="mbr-section__container container">
+                <a class="mbr-arrow__link" href="#features"><i class="glyphicon glyphicon-menu-down"></i></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="betamodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">REQUEST BETA ACCESS</h4>
+      </div>
+      <div class="modal-body">
+      	{% if request.method == 'POST' and not form.errors %}
+			<p class="text-active" id="value-prop" align="center" style="font-size:30px; color:white; text-align:center">
+				Thanks for 
+				<br>
+				signing up!
+				<br><br> 
+			</p>
+		{% else %}
+			<form method='POST' action='#'>
+				{% csrf_token %}
+				{{form|crispy}}
+				<input type='hidden' name='beta' value='True'>
+				<button type="submit" class="btn btn-success btn-lg btn-block">
+					Request Access
+				</button>
+			</form>
+		{% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade" id="signupmodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">NOTIFY ME AT LAUNCH</h4>
+      </div>
+      <div class="modal-body">
+      	{% if request.method == 'POST' and not form.errors %}
+			<p class="text-active" id="value-prop" align="center" style="font-size:30px; color:white; text-align:center">
+				Thanks for 
+				<br>
+				signing up!
+				<br><br> 
+			</p>
+		{% else %}
+			<form method='POST' action='#'>
+				{% csrf_token %}
+				{{form|crispy}}
+				<input type='hidden' name='beta' value='False'>
+				<button type="submit" class="btn btn-success btn-lg btn-block">
+					Notify Me
+				</button>
+			</form>
+		{% endif %}
+      </div>
+    </div>
+  </div>
+</div>
+
+<section class="content-2 col-3" id="features" style="background-color: rgb(255, 255, 255); height:100vh">
+    <div class="container">
+        <div class="row">
+            <div>
+                <div class="thumbnail">
+                   <i class="fa fa-cloud-upload fa-5x text-primary" aria-hidden="true"></i>
+                    <br><br>
+                    <div class="caption">
+                        <div>
+                            <h3>HOST REMOTELY</h3>
+                            <p>Host your design files, a bill of materials, and all documentation in a secure online repository.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="thumbnail">
+                    <i class="fa fa-desktop fa-5x text-primary" aria-hidden="true"></i>
+                    <br><br>
+                    <div class="caption">
+                        <div>
+                            <h3>CLONE LOCALY</h3>
+                            <p>Mirror the project on your local computer and synch from our desktop app or on the website.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="thumbnail">
+                    <i class="fa fa-files-o fa-5x text-primary" aria-hidden="true"></i>
+                    <br><br>
+                    <div class="caption">
+                        <div>
+                            <h3>FULLY VERSIONED</h3>
+                            <p>Every version of every file uploaded and every change committed is archived in the cloud. </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br><br>
+        <div class="row">
+            <div>
+                <div class="thumbnail">
+                   <i class="fa fa-code-fork fa-5x text-primary" aria-hidden="true"></i>
+                    <br><br>
+                    <div class="caption">
+                        <div>
+                            <h3>BRANCH, MERGE &amp DIFF</h3>
+                            <p>Enhance your workflow by creating branches, visually diff versions, and merge project states.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="thumbnail">
+                    <i class="fa fa-tags fa-5x text-primary" aria-hidden="true"></i>
+                    <br><br>
+                    <div class="caption">
+                        <div>
+                            <h3>PUBLISH REVISIONS</h3>
+                            <p>Organize your files and projects into automated releases by publishing named revisions.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="thumbnail">
+                    <i class="fa fa-history fa-5x text-primary" aria-hidden="true"></i>
+                    <br><br>
+                    <div class="caption">
+                        <div>
+                            <h3>REVERT CHANGES</h3>
+                            <p>Easily visualize project and file history and revert back to any previous state.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>  
+    </div>
+</section>
+
+<section class="mbr-section mbr-section--relative mbr-parallax-background" id="value1" style='height:100vh;background-color:#efefef'>
+    <div class="mbr-section__container mbr-section__container--isolated container">
+        <div class="row">
+            <br><br>
+            <div class="mbr-box mbr-box--fixed mbr-box--adapted">
+                <div class="mbr-box__magnet mbr-box__magnet--top-right mbr-section__left col-sm-7">
+                    <figure class="mbr-figure mbr-figure--adapted mbr-figure--caption-inside-bottom mbr-figure--full-width"><img class="mbr-figure__img" src="{% static 'omnibuilds/assets/images/revision_control.png' %}"></figure>
+                </div>
+                <div class="mbr-box__magnet mbr-class-mbr-box__magnet--center-left col-sm-5 mbr-section__right">
+                    <div class="mbr-section__container mbr-section__container--middle" style='color:3a3a3a'>
+                        <h1>
+                            FULL REVISION CONTROL
+                        </h1>
+                    </div>
+                    <div class="mbr-section__container mbr-section__container--middle">
+                        <div class="mbr-article mbr-article--auto-align" style='color:gray'>
+                            <p>Don’t just track revisions, control them with the ability to revert to previous designs, configure, publish and merge designs. Control every design element independently with a completely modular infrastructure and then bring them all together to build beautiful design projects.&nbsp;
+                            </p>
+                        </div>
+                    </div>
+                    <div class="mbr-section__container">
+                        <div class="mbr-buttons mbr-buttons--auto-align"><a class="mbr-buttons__btn btn btn-lg btn-default" href="https://mobirise.com/bootstrap-template/">LEARN MORE</a></div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="mbr-section mbr-section--relative mbr-parallax-background" id="value2" style="height:100vh">
+    <div class="mbr-section__container mbr-section__container--isolated container">
+        <div class="row">
+            <br><br>
+            <div class="mbr-box mbr-box--fixed mbr-box--adapted">
+                <div class="mbr-box__magnet mbr-class-mbr-box__magnet--center-left col-sm-5 mbr-section__right">
+                    <div class="mbr-section__container mbr-section__container--middle" style='color:3a3a3a'>
+                        <h1>
+                            INTELLIGENT DESIGN MANAGEMENT
+                        </h1>
+                    </div>
+                    <div class="mbr-section__container mbr-section__container--middle">
+                        <div class="mbr-article mbr-article--auto-align" style='color:gray'>
+                            <p>This is not cloud storage for engineers, it’s design management. Build BOM’s, use our open parts library and organize your files into a cohesive design repository. Combine that with collaboration tools, complete revision control and in browser file viewing and now we are cooking with gas.&nbsp;
+                            </p>
+                        </div>
+                    </div>
+                    <div class="mbr-section__container">
+                        <div class="mbr-buttons mbr-buttons--auto-align"><a class="mbr-buttons__btn btn btn-lg btn-default" href="https://mobirise.com/bootstrap-template/">LEARN MORE</a></div>
+                    </div>
+                </div>
+                <div class="mbr-box__magnet mbr-box__magnet--top-right mbr-section__left col-sm-7">
+                    <figure class="mbr-figure mbr-figure--adapted mbr-figure--caption-inside-bottom mbr-figure--full-width">
+                        <img class="mbr-figure__img" src="{% static 'omnibuilds/assets/images/document_structure.png' %}">
+                    </figure>
+                </div>
+                
+                
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="mbr-section mbr-section--relative mbr-parallax-background" id="value3" style='background-color:#efefef; height:100vh'>
+    <div class="mbr-section__container mbr-section__container--isolated container">
+        <div class="row">
+            <br><br>
+            <div class="mbr-box mbr-box--fixed mbr-box--adapted">
+
+                <div class="mbr-box__magnet mbr-box__magnet--top-right mbr-section__left col-sm-7">
+                    <figure class="mbr-figure mbr-figure--adapted mbr-figure--caption-inside-bottom mbr-figure--full-width"><img class="mbr-figure__img" src="{% static 'omnibuilds/assets/images/cad_logos.png' %}"></figure>
+                </div>
+                <div class="mbr-box__magnet mbr-class-mbr-box__magnet--center-left col-sm-5 mbr-section__right">
+                    <div class="mbr-section__container mbr-section__container--middle" style='color:3a3a3a'>
+                        <h1>
+                            CAD AGNOSTIC
+                        </h1>
+                    </div>
+                    <div class="mbr-section__container mbr-section__container--middle">
+                        <div class="mbr-article mbr-article--auto-align" style='color:gray'>
+                            <p>Want to learn how to use a brand new design program? We didn’t think so! That’s why we designed OmniBuilds to be technology agnostic and user friendly. Use your current CAD program and integrate directly to OmniBuilds. We work in the background to organize your design. If you can use web browser, you can use OmniBuilds.&nbsp;
+                            </p>
+                        </div>
+                    </div>
+                    <div class="mbr-section__container">
+                        <div class="mbr-buttons mbr-buttons--auto-align"><a class="mbr-buttons__btn btn btn-lg btn-default" href="https://mobirise.com/bootstrap-template/">LEARN MORE</a></div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</section>
+
+<section style='height:100vh' id='pricing'>
+    <div class='container'>
+        <div class='row'>
+            <br><br>
+            <div class='col-xs-12 col-md-4'>
+                <div class='panel panel-default'>
+                    <div class='panel-heading'>
+                        <h1 class='text-center'>STARTER</h1>
+                        <div class="panel-body text-center">
+                            <p class="lead" style="font-size:30px"><strong> Free Forever </strong></p>
+                        </div>
+                        <p class='text-center'>Get started with a fully featured plan that is always free for public projects and parts.</p>
+                        <br>
+                        <ul class="list-group list-group-flush ">
+                            <li class="list-group-item">
+                                <i class="fa fa-folder-open-o text-primary" aria-hidden="true"></i>&nbsp&nbsp Unlimited Projects
+                            </li>
+                            <li class="list-group-item">
+                                <i class="fa fa-share text-primary" aria-hidden="true"></i>&nbsp&nbsp Unlimited Guests (read only)
+                            </li>
+                            <li class="list-group-item">
+                                <i class="fa fa-cloud-upload text-primary" aria-hidden="true"></i>&nbsp&nbsp Unlimited Public Storage
+                            </li>
+                            <li class="list-group-item">
+                                <i class="fa fa-lock text-primary" aria-hidden="true"></i>&nbsp&nbsp 100 MB of Private Storage
+                            </li>
+                            <li class="list-group-item">
+                                <i class="fa fa-users text-primary" aria-hidden="true"></i>&nbsp&nbsp Unlimited Collaborators
+                            </li>
+                        </ul>
+                        <div class="panel-footer"> <a class="btn btn-block btn-primary" href="#">SIGN UP</a> </div>
+                    </div>
+                </div>
+            </div>
+            <div class='col-xs-12 col-md-4'>
+                <div class='panel panel-default'>
+                    <div class='panel-heading'>
+                        <h1 class='text-center'>PROFESSIONAL</h1>
+                        <p class='text-center'> </p>
+                        <div class="panel-body text-center">
+                            <p class="lead" style="font-size:30px"><strong> $25 user / month </strong></p>
+                        </div>
+                        <p class='text-center'>Secure private storage for your hardware projects, perfect for teams and organizations.</p>
+                        <br>
+                        <ul class="list-group list-group-flush ">
+                            <li class="list-group-item">
+                                <i class="fa fa-folder-open-o text-primary" aria-hidden="true"></i>&nbsp&nbsp Unlimited Projects
+                            </li>
+                            <li class="list-group-item">
+                                <i class="fa fa-share text-primary" aria-hidden="true"></i>&nbsp&nbsp Unlimited Guests (read only)
+                            </li>
+                            <li class="list-group-item">
+                                <i class="fa fa-cloud-upload text-primary" aria-hidden="true"></i>&nbsp&nbsp Unlimited Public Storage
+                            </li>
+                            <li class="list-group-item">
+                                <i class="fa fa-lock text-primary" aria-hidden="true"></i>&nbsp&nbsp 10 GB Private Storage per User (shared)
+                            </li>
+                            <li class="list-group-item">
+                                <i class="fa fa-users text-primary" aria-hidden="true"></i>&nbsp&nbsp Per User License
+                            </li>
+                        </ul>
+                        <div class="panel-footer"> <a class="btn btn-block btn-success" href="#">OPEN AN ACCOUNT</a> </div>
+                    </div>
+                </div>
+            </div>
+            <div class='col-xs-12 col-md-4'>
+                <div class='panel panel-default'>
+                    <div class='panel-heading'>
+                        <h1 class='text-center'>ENTERPRISE</h1>
+                        <p class='text-center'> </p>
+                        <div class="panel-body text-center">
+                            <p class="lead" style="font-size:30px"><strong> Contact Sales </strong></p>
+                        </div>
+                        <p class='text-center'>Hosted by us in a private cloud or self-hosted on your own servers, with dedicated support.</p>
+                        <br>
+                        <ul class="list-group list-group-flush ">
+                            <li class="list-group-item">
+                                <i class="fa fa-folder-open-o text-primary" aria-hidden="true"></i>&nbsp&nbsp Unlimited Projects
+                            </li>
+                            <li class="list-group-item">
+                                <i class="fa fa-share text-primary" aria-hidden="true"></i>&nbsp&nbsp Unlimited Guests (read only)
+                            </li>
+                            <li class="list-group-item">
+                                <i class="fa fa-cloud-upload text-primary" aria-hidden="true"></i>&nbsp&nbsp Unlimited Public Storage
+                            </li>
+                            <li class="list-group-item">
+                                <i class="fa fa-lock text-primary" aria-hidden="true"></i>&nbsp&nbsp Unlimited Private Storage
+                            </li>
+                            <li class="list-group-item">
+                                <i class="fa fa-users text-primary" aria-hidden="true"></i>&nbsp&nbsp Per User License
+                            </li>
+                        </ul>
+                        <div class="panel-footer"> <a class="btn btn-block btn-info" href="#">CONTACT SALES</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</seciton>
+
+<section style='height:100vh' id='about'>
+    <div class="container">
+        <div class='row'>
+            <div class="col-xs-12">
+                <h1 style='text-align:center'>
+                    <br>
+                    Mission
+                    <br>
+                </h1>
+                <p class='lead'>
+                    OmniBuilds exists to make building great products easier, more collaborative, and more inventive.
+                    <br><br>
+                    We set out to make a platform that utilizes cloud technology, great UI, software style collaboration and that is just plain fun to use. Our customers build some of the most amazing products in the world; products that connect technology and the physical world in new and exciting ways.
+                    <br><br>
+                    OmniBuilds is here to help you build a better mousetrap, share it with your coworkers and get to manufacturing faster.
+                </p> 
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="mbr-box mbr-section mbr-section--relative mbr-section--fixed-size mbr-section--full-height mbr-section--bg-adapted mbr-parallax-background" id="header1-76" style="background-image: url({% static 'omnibuilds/assets/images/apple_watch_teardown.png' %});">
+    <div class="mbr-box__magnet mbr-box__magnet--sm-padding mbr-box__magnet--center-left">
+        <div class="mbr-overlay" style="opacity: 0.85; background-color: rgb(41, 105, 176);"></div>
+        <div class="mbr-box__container mbr-section__container container">
+            <div class="mbr-box mbr-box--stretched"><div class="mbr-box__magnet mbr-box__magnet--center-left">
+                <div class="row"><div class=" col-sm-6">
+                    <div class="mbr-hero animated fadeInUp">
+                        <h1 class="mbr-hero__text">GET STARTED <br> FOR FREE</h1>
+                        <br>
+                        <p class="mbr-hero__subtext">Starter accounts are full-featured and include 100 MB of private data.  Unlimited data for public projects and parts.<br></p>
+                    </div>
+                    <div class="mbr-buttons btn-inverse mbr-buttons--left"><a class="mbr-buttons__btn btn btn-lg animated fadeInUp delay btn-success" data-toggle="modal" data-target="#betamodal">Request beta access</a> <a class="mbr-buttons__btn btn btn-lg btn-default animated fadeInUp delay" data-toggle="modal" data-target="#signupmodal">Notify me at launch</a></div>
+                </div></div>
+            </div></div>
+        </div>
+    </div>
+</section>
+
+<footer class="mbr-section mbr-section--relative mbr-section--fixed-size" id="footer1-91" style="background-color: rgb(68, 68, 68);">
+    <div class="mbr-section__container container">
+        <div class="mbr-footer mbr-footer--wysiwyg row">
+            <div class="col-sm-12">
+                <p class="mbr-footer__copyright"></p><p>Copyright  2016 OmniBuilds.com, Inc. <a href="https://mobirise.com/bootstrap-template/license.txt" class="text-gray">Terms</a></p><p></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+	<script src="{% static 'omnibuilds/assets/jquery/jquery.min.js' %}"></script>
+	<script src="{% static 'omnibuilds/assets/bootstrap/js/bootstrap.min.js' %}"></script>
+	<script src="{% static 'omnibuilds/assets/smooth-scroll/SmoothScroll.js' %}"></script>
+	<script src="{% static 'omnibuilds/assets/jarallax/jarallax.js' %}"></script>
+	<script src="{% static 'omnibuilds/assets/mobirise/js/script.js' %}"></script>
+<!--
+	<script src="{% static 'omnibuilds/assets/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+	<script src="{% static 'omnibuilds/assets/social-likes/social-likes.js' %}"></script>
+	<script src="{% static 'omnibuilds/assets/mobirise-gallery/script.js' %}"></script>
+	<script src="{% static 'omnibuilds/assets/bootstrap-carousel-swipe/bootstrap-carousel-swipe.js' %}"></script>
+	<script src="{% static 'omnibuilds/assets/masonry/masonry.pkgd.min.js' %}"></script>
+ -->
+</body>
+</html>
