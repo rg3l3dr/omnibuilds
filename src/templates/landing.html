@@ -1,9 +1,6 @@
 {% load staticfiles %}
 {% load crispy_forms_tags %}
 
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,8 +24,6 @@
   <link rel="stylesheet" href="{% static 'omnibuilds/assets/mobirise-slider/style.css' %}">
   <link rel="stylesheet" href="{% static 'omnibuilds/assets/mobirise-gallery/style.css' %}">
  -->
-  
-
 </head>
 <body>
 
@@ -52,9 +47,9 @@
                     <nav class="mbr-navbar__menu-box mbr-navbar__menu-box--inline-right">
                         <div class="mbr-navbar__column">
                             <ul class="mbr-navbar__items mbr-navbar__items--right mbr-buttons mbr-buttons--right  mbr-buttons--active">
-                                <li class="mbr-navbar__item"><a class="mbr-buttons__link btn text-white" href="#features">FEATURES</a></li>
+                                <li class="mbr-navbar__item"><a class="mbr-buttons__link btn text-white" href="#features1-75">FEATURES</a></li>
+                                <li class="mbr-navbar__item"><a class="mbr-buttons__link btn text-white" href="#features1-75-1">MISSION</a></li>
                                 <li class="mbr-navbar__item"><a class="mbr-buttons__link btn text-white" href="#pricing">PRICING</a></li>
-                                <li class="mbr-navbar__item"><a class="mbr-buttons__link btn text-white" href="#about">ABOUT</a></li>
                                 <!-- <li class="mbr-navbar__item"><a class="mbr-buttons__link btn text-white" href="blog.html">Demo</a></li></ul></div> -->
                         <div class="mbr-navbar__column">
                             <ul class="mbr-navbar__items mbr-navbar__items--right mbr-buttons mbr-buttons--freeze mbr-buttons--right btn-inverse mbr-buttons--active">
@@ -91,13 +86,11 @@
         </div>
         <div class="mbr-arrow mbr-arrow--floating text-center">
             <div class="mbr-section__container container">
-                <a class="mbr-arrow__link" href="#features"><i class="glyphicon glyphicon-menu-down"></i></a>
+                <a class="mbr-arrow__link" href="#features1-75"><i class="glyphicon glyphicon-menu-down"></i></a>
             </div>
         </div>
     </div>
 </section>
-
-
 
 <!-- Modal -->
 <div class="modal fade" id="betamodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -160,177 +153,125 @@
   </div>
 </div>
 
-<section class="content-2 col-3" id="features" style="background-color: rgb(255, 255, 255); height:100vh">
+<section class="content-2 col-4 text-center" id="features1-75" style="background-color: rgb(255, 255, 255); height:100vh">
+
+	<div class='container'>
+		<p class='text-center' style='color:#3c4146; font-size:48px'>Hardware has a home</p>
+		<br>
+		<div class='col-xs-8 col-xs-offset-2'>
+			<p class='lead' style='color:#767676'>
+				OmniBuilds allows designers and engineers to collaborate on hardware projects using git-style workflows in a public or private setting.
+			</p>
+			<br><br>
+		</div>
+	</div>    
     <div class="container">
         <div class="row">
             <div>
                 <div class="thumbnail">
-                   <i class="fa fa-cloud-upload fa-5x text-primary" aria-hidden="true"></i>
-                    <br><br>
+                    <i class="fa fa-users fa-5x text-primary" aria-hidden="true"></i>
+                    <br>
                     <div class="caption">
                         <div>
-                            <h3>HOST REMOTELY</h3>
-                            <p>Host your design files, a bill of materials, and all documentation in a secure online repository.</p>
+                            <h3>BUILT FOR TEAMS</h3>
+                            <p> Dramatically improve collaboration amongst cross functional engineering teams.  Host your project on OmniBuilds and mirror it to a local folder.  Easily push or pull changes using our cross platform desktop app. &nbsp;</p>
                         </div>
+                        <p class="group"><a href="#value1" class="btn btn-default">LEARN MORE</a></p>
                     </div>
                 </div>
             </div>
             <div>
                 <div class="thumbnail">
-                    <i class="fa fa-desktop fa-5x text-primary" aria-hidden="true"></i>
-                    <br><br>
+                    <i class="fa fa-cubes fa-5x text-primary" aria-hidden="true"></i>
+                    <br>
                     <div class="caption">
                         <div>
-                            <h3>CLONE LOCALY</h3>
-                            <p>Mirror the project on your local computer and synch from our desktop app or on the website.</p>
+                            <h3>MODULAR PARTS & PROJECTS</h3>
+                            <p>Projects are simply collections of other projects, organized into a bill of materials, with associated documentaiton and CAD files.  This allows you to build a modular parts library or incorporate work from the community. &nbsp;</p>
                         </div>
+                        <p class="group"><a href="#value2" class="btn btn-default">LEARN MORE</a></p>
                     </div>
                 </div>
             </div>
             <div>
                 <div class="thumbnail">
-                    <i class="fa fa-files-o fa-5x text-primary" aria-hidden="true"></i>
-                    <br><br>
+                    <i class="fa fa-code-fork fa-5x text-primary" aria-hidden="true"></i>
+                    <br>
                     <div class="caption">
                         <div>
-                            <h3>FULLY VERSIONED</h3>
-                            <p>Every version of every file uploaded and every change committed is archived in the cloud. </p>
+                            <h3>FULL REVISION CONTROL</h3>
+                            <p>Every version of every file uploaded and every change commited is archived in the cloud.  Enhance your workflow by creating branches, publish named revisions, diff versions, and merge project configurations.</p>
                         </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <br><br>
-        <div class="row">
-            <div>
-                <div class="thumbnail">
-                   <i class="fa fa-code-fork fa-5x text-primary" aria-hidden="true"></i>
-                    <br><br>
-                    <div class="caption">
-                        <div>
-                            <h3>BRANCH, MERGE &amp DIFF</h3>
-                            <p>Enhance your workflow by creating branches, visually diff versions, and merge project states.</p>
-                        </div>
+                        <p class="group"><a href="#value3" class="btn btn-default">LEARN MORE</a></p>
                     </div>
                 </div>
             </div>
             <div>
                 <div class="thumbnail">
-                    <i class="fa fa-tags fa-5x text-primary" aria-hidden="true"></i>
-                    <br><br>
+                    <i class="fa fa-cube fa-5x text-primary" aria-hidden="true"></i>
+                    <br>
                     <div class="caption">
                         <div>
-                            <h3>PUBLISH REVISIONS</h3>
-                            <p>Organize your files and projects into automated releases by publishing named revisions.</p>
+                            <h3>CAD AGNOSTIC</h3>
+                            <p> Associate any type of CAD file (mechancial, electronic, parametric), rendering, or graphic with a design.  Track assemblies natively in CAD or build your BOM directly on OmniBuilds.  You choose how to structure your projects.     &nbsp; </p>
                         </div>
+                        <p class="group"><a href="#value4" class="btn btn-default">LEARN MORE</a></p>
                     </div>
                 </div>
-            </div>
-            <div>
-                <div class="thumbnail">
-                    <i class="fa fa-history fa-5x text-primary" aria-hidden="true"></i>
-                    <br><br>
-                    <div class="caption">
-                        <div>
-                            <h3>REVERT CHANGES</h3>
-                            <p>Easily visualize project and file history and revert back to any previous state.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>  
-    </div>
-</section>
-
-<section class="mbr-section mbr-section--relative mbr-parallax-background" id="value1" style='height:100vh;background-color:#efefef'>
-    <div class="mbr-section__container mbr-section__container--isolated container">
-        <div class="row">
-            <br><br>
-            <div class="mbr-box mbr-box--fixed mbr-box--adapted">
-                <div class="mbr-box__magnet mbr-box__magnet--top-right mbr-section__left col-sm-7">
-                    <figure class="mbr-figure mbr-figure--adapted mbr-figure--caption-inside-bottom mbr-figure--full-width"><img class="mbr-figure__img" src="{% static 'omnibuilds/assets/images/revision_control.png' %}"></figure>
-                </div>
-                <div class="mbr-box__magnet mbr-class-mbr-box__magnet--center-left col-sm-5 mbr-section__right">
-                    <div class="mbr-section__container mbr-section__container--middle" style='color:3a3a3a'>
-                        <h1>
-                            FULL REVISION CONTROL
-                        </h1>
-                    </div>
-                    <div class="mbr-section__container mbr-section__container--middle">
-                        <div class="mbr-article mbr-article--auto-align" style='color:gray'>
-                            <p>Don’t just track revisions, control them with the ability to revert to previous designs, configure, publish and merge designs. Control every design element independently with a completely modular infrastructure and then bring them all together to build beautiful design projects.&nbsp;
-                            </p>
-                        </div>
-                    </div>
-                    <div class="mbr-section__container">
-                        <div class="mbr-buttons mbr-buttons--auto-align"><a class="mbr-buttons__btn btn btn-lg btn-default" href="https://mobirise.com/bootstrap-template/">LEARN MORE</a></div>
-                    </div>
-                </div>
-                
             </div>
         </div>
     </div>
 </section>
 
-<section class="mbr-section mbr-section--relative mbr-parallax-background" id="value2" style="height:100vh">
-    <div class="mbr-section__container mbr-section__container--isolated container">
+<section class="content-2 col-3 text-center" id="features1-75-1" style='height:100vh;background-color:#efefef'>
+
+	<div class='container'>
+		<p class='text-center' style='color:#3c4146; font-size:48px'>Our mission is to accelerate the design process</p>
+		<br>
+		<div class='col-xs-10 col-xs-offset-1'>
+			<p class='lead' style='color:#767676'>
+				We want to make hardware design more like software design, with more frequent iterations, easier and more open collaboration, libraries for open source parts, and lower barriers to entry overall.
+			</p>
+			<br><br><br>
+		</div>
+	</div>    
+    <div class="container">
         <div class="row">
-            <br><br>
-            <div class="mbr-box mbr-box--fixed mbr-box--adapted">
-                <div class="mbr-box__magnet mbr-class-mbr-box__magnet--center-left col-sm-5 mbr-section__right">
-                    <div class="mbr-section__container mbr-section__container--middle" style='color:3a3a3a'>
-                        <h1>
-                            INTELLIGENT DESIGN MANAGEMENT
-                        </h1>
-                    </div>
-                    <div class="mbr-section__container mbr-section__container--middle">
-                        <div class="mbr-article mbr-article--auto-align" style='color:gray'>
-                            <p>This is not cloud storage for engineers, it’s design management. Build BOM’s, use our open parts library and organize your files into a cohesive design repository. Combine that with collaboration tools, complete revision control and in browser file viewing and now we are cooking with gas.&nbsp;
-                            </p>
+        	<p style='color:#3c4146; text-align:left; font-size:36px'>Who is OmniBuilds for?</p>
+        	<br>
+            <div>
+                <div class="thumbnail">
+                    <div class="caption">
+                        <div>
+                            <p style='font-size:24px; color:#e8400d'>DESIGNERS & ENGINEERS</p>
+                            <br>
+                            <p style='font-size:18px'> Whether you want to work on a personal project, collaborate with a team, or share your design portfolio,   OmniBuilds was made for you!
+                             &nbsp;</p>
                         </div>
                     </div>
-                    <div class="mbr-section__container">
-                        <div class="mbr-buttons mbr-buttons--auto-align"><a class="mbr-buttons__btn btn btn-lg btn-default" href="https://mobirise.com/bootstrap-template/">LEARN MORE</a></div>
-                    </div>
                 </div>
-                <div class="mbr-box__magnet mbr-box__magnet--top-right mbr-section__left col-sm-7">
-                    <figure class="mbr-figure mbr-figure--adapted mbr-figure--caption-inside-bottom mbr-figure--full-width">
-                        <img class="mbr-figure__img" src="{% static 'omnibuilds/assets/images/document_structure.png' %}">
-                    </figure>
-                </div>
-                
-                
             </div>
-        </div>
-    </div>
-</section>
-
-<section class="mbr-section mbr-section--relative mbr-parallax-background" id="value3" style='background-color:#efefef; height:100vh'>
-    <div class="mbr-section__container mbr-section__container--isolated container">
-        <div class="row">
-            <br><br>
-            <div class="mbr-box mbr-box--fixed mbr-box--adapted">
-
-                <div class="mbr-box__magnet mbr-box__magnet--top-right mbr-section__left col-sm-7">
-                    <figure class="mbr-figure mbr-figure--adapted mbr-figure--caption-inside-bottom mbr-figure--full-width"><img class="mbr-figure__img" src="{% static 'omnibuilds/assets/images/cad_logos.png' %}"></figure>
-                </div>
-                <div class="mbr-box__magnet mbr-class-mbr-box__magnet--center-left col-sm-5 mbr-section__right">
-                    <div class="mbr-section__container mbr-section__container--middle" style='color:3a3a3a'>
-                        <h1>
-                            CAD AGNOSTIC
-                        </h1>
-                    </div>
-                    <div class="mbr-section__container mbr-section__container--middle">
-                        <div class="mbr-article mbr-article--auto-align" style='color:gray'>
-                            <p>Want to learn how to use a brand new design program? We didn’t think so! That’s why we designed OmniBuilds to be technology agnostic and user friendly. Use your current CAD program and integrate directly to OmniBuilds. We work in the background to organize your design. If you can use web browser, you can use OmniBuilds.&nbsp;
-                            </p>
+            <div>
+                <div class="thumbnail">
+                    <div class="caption">
+                        <div>
+                            <p style='font-size:24px; color:#0079d1'>HARDWARE COMPANIES</p>
+                            <br>
+                            <p style='font-size:18px'>From the smallest hardware startup to the largest manufacturing company. Any business that designs or builds physical goods. &nbsp;</p>
                         </div>
                     </div>
-                    <div class="mbr-section__container">
-                        <div class="mbr-buttons mbr-buttons--auto-align"><a class="mbr-buttons__btn btn btn-lg btn-default" href="https://mobirise.com/bootstrap-template/">LEARN MORE</a></div>
+                </div>
+            </div>
+            <div>
+                <div class="thumbnail">
+                    <div class="caption">
+                        <div>
+                            <p style='font-size:24px; color:#7a3497'>HARDWARE COMMUNITIES</p>
+                            <br>
+                            <p style='font-size:18px'>Open Source Hardware Projects, Makerspaces, Hackerspaces and Fab Labs who want to share their work and collaborate.</p>
+                        </div>
                     </div>
                 </div>
-                
             </div>
         </div>
     </div>
@@ -340,12 +281,14 @@
     <div class='container'>
         <div class='row'>
             <br><br>
+            <p class='text-center' style='color:#3c4146; font-size:36px'>Flexible plans for individuals and businesses</p>
+            <br><br>
             <div class='col-xs-12 col-md-4'>
                 <div class='panel panel-default'>
                     <div class='panel-heading'>
-                        <h1 class='text-center'>STARTER</h1>
+                        <h1 class='text-center'>FREE</h1>
                         <div class="panel-body text-center">
-                            <p class="lead" style="font-size:30px"><strong> Free Forever </strong></p>
+                            <p class="lead" style="font-size:30px"><strong> $0 user / month  </strong></p>
                         </div>
                         <p class='text-center'>Get started with a fully featured plan that is always free for public projects and parts.</p>
                         <br>
@@ -366,15 +309,14 @@
                                 <i class="fa fa-users text-primary" aria-hidden="true"></i>&nbsp&nbsp Unlimited Collaborators
                             </li>
                         </ul>
-                        <div class="panel-footer"> <a class="btn btn-block btn-primary" href="#">SIGN UP</a> </div>
+                        <div class="panel-footer"> <a class="btn btn-block btn-primary">COMING SOON</a> </div>
                     </div>
                 </div>
             </div>
             <div class='col-xs-12 col-md-4'>
                 <div class='panel panel-default'>
                     <div class='panel-heading'>
-                        <h1 class='text-center'>PROFESSIONAL</h1>
-                        <p class='text-center'> </p>
+                        <h1 class='text-center'>TEAM</h1>
                         <div class="panel-body text-center">
                             <p class="lead" style="font-size:30px"><strong> $25 user / month </strong></p>
                         </div>
@@ -397,7 +339,7 @@
                                 <i class="fa fa-users text-primary" aria-hidden="true"></i>&nbsp&nbsp Per User License
                             </li>
                         </ul>
-                        <div class="panel-footer"> <a class="btn btn-block btn-success" href="#">OPEN AN ACCOUNT</a> </div>
+                        <div class="panel-footer"> <a class="btn btn-block btn-success">COMING SOON</a> </div>
                     </div>
                 </div>
             </div>
@@ -428,30 +370,139 @@
                                 <i class="fa fa-users text-primary" aria-hidden="true"></i>&nbsp&nbsp Per User License
                             </li>
                         </ul>
-                        <div class="panel-footer"> <a class="btn btn-block btn-info" href="#">CONTACT SALES</a></div>
+                        <div class="panel-footer"> <a class="btn btn-block btn-info">COMING SOON</a></div>
                     </div>
                 </div>
+                <br><br>
             </div>
+            <br><br>
         </div>
     </div>
 </seciton>
 
-<section style='height:100vh' id='about'>
-    <div class="container">
-        <div class='row'>
-            <div class="col-xs-12">
-                <h1 style='text-align:center'>
-                    <br>
-                    Mission
-                    <br>
-                </h1>
-                <p class='lead'>
-                    OmniBuilds exists to make building great products easier, more collaborative, and more inventive.
-                    <br><br>
-                    We set out to make a platform that utilizes cloud technology, great UI, software style collaboration and that is just plain fun to use. Our customers build some of the most amazing products in the world; products that connect technology and the physical world in new and exciting ways.
-                    <br><br>
-                    OmniBuilds is here to help you build a better mousetrap, share it with your coworkers and get to manufacturing faster.
-                </p> 
+<section class="mbr-section mbr-section--relative mbr-parallax-background" id="value1" style='height:100vh;background-color:#efefef'>
+    <div class="mbr-section__container mbr-section__container--isolated container">
+        <div class="row">
+            <br><br>
+            <div class="mbr-box mbr-box--fixed mbr-box--adapted">
+                <div class="mbr-box__magnet mbr-box__magnet--top-right mbr-section__left col-sm-7">
+                    <figure class="mbr-figure mbr-figure--adapted mbr-figure--caption-inside-bottom mbr-figure--full-width"><img class="mbr-figure__img" src="{% static 'omnibuilds/assets/images/team.png' %}"></figure>
+                </div>
+                <div class="mbr-box__magnet mbr-class-mbr-box__magnet--center-left col-sm-5 mbr-section__right">
+                    <div class="mbr-section__container mbr-section__container--middle" style='color:3a3a3a'>
+                        <h1>
+                            BUILT FOR TEAMS
+                        </h1>
+                    </div>
+                    <div class="mbr-section__container mbr-section__container--middle">
+                        <div class="mbr-article mbr-article--auto-align" style='color:gray'>
+                            <p> Modern hardware design involes a diverse array of skills and expertise, requiring cross-functional teams that must collobrate in order to succeed.  Everyone on the team needs shared access to the latest  version, as well as the full version history.  They need the ability to experiment with new designs and ideas without having to worry about impacting the project.  An OmniBuilds repository serves as the single source of truth for your project and allows for seamless collaboration across a team.  Host the project in a secure online repository and acess it via the website or our cross-platform desktop app.  Mirror the project on your desktop and synch directly as changes occur, giving everyone real time situational awareness.
+                            	&nbsp;
+                            </p>
+                        </div>
+                    </div>
+                    <!-- <div class="mbr-section__container">
+                        <div class="mbr-buttons mbr-buttons--auto-align"><a class="mbr-buttons__btn btn btn-lg btn-default" href="#">LEARN MORE</a></div>
+                    </div> -->
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="mbr-section mbr-section--relative mbr-parallax-background" id="value2" style="height:100vh">
+    <div class="mbr-section__container mbr-section__container--isolated container">
+        <div class="row">
+            <br><br>
+            <div class="mbr-box mbr-box--fixed mbr-box--adapted">
+                <div class="mbr-box__magnet mbr-class-mbr-box__magnet--center-left col-sm-5 mbr-section__right">
+                    <div class="mbr-section__container mbr-section__container--middle" style='color:3a3a3a'>
+                        <h1>
+                            MODULAR PARTS & PROJECTS
+                        </h1>
+                    </div>
+                    <div class="mbr-section__container mbr-section__container--middle">
+                        <div class="mbr-article mbr-article--auto-align" style='color:gray'>
+                            <p> Each repository includes all design files, a Bill of Materials (BOM), and all documentation for a given project.  Each item in the BOM is a reference to another project repository on OmniBuilds.  This modular structure allows you to eaily resuse parts between designs and quickly build parts libraries.  Any public project is automatically added to the open parts library and may be used as a part by any other user on the site.  Private parts remain within your private parts library and are only visible to members of your team.
+                            	&nbsp;
+                            </p>
+                        </div>
+                    </div>
+               <!--      <div class="mbr-section__container">
+                        <div class="mbr-buttons mbr-buttons--auto-align"><a class="mbr-buttons__btn btn btn-lg btn-default" href="#">LEARN MORE</a></div>
+                    </div> -->
+                </div>
+                <div class="mbr-box__magnet mbr-box__magnet--top-right mbr-section__left col-sm-7">
+                    <figure class="mbr-figure mbr-figure--adapted mbr-figure--caption-inside-bottom mbr-figure--full-width">
+                        <img class="mbr-figure__img" src="{% static 'omnibuilds/assets/images/document_structure.png' %}">
+                    </figure>
+                </div>
+                
+                
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="mbr-section mbr-section--relative mbr-parallax-background" id="value3" style='height:100vh;background-color:#efefef'>
+    <div class="mbr-section__container mbr-section__container--isolated container">
+        <div class="row">
+            <br><br>
+            <div class="mbr-box mbr-box--fixed mbr-box--adapted">
+                <div class="mbr-box__magnet mbr-box__magnet--top-right mbr-section__left col-sm-7">
+                    <figure class="mbr-figure mbr-figure--adapted mbr-figure--caption-inside-bottom mbr-figure--full-width"><img class="mbr-figure__img" src="{% static 'omnibuilds/assets/images/revision_control.png' %}"></figure>
+                </div>
+                <div class="mbr-box__magnet mbr-class-mbr-box__magnet--center-left col-sm-5 mbr-section__right">
+                    <div class="mbr-section__container mbr-section__container--middle" style='color:3a3a3a'>
+                        <h1>
+                            FULL REVISION CONTROL
+                        </h1>
+                    </div>
+                    <div class="mbr-section__container mbr-section__container--middle">
+                        <div class="mbr-article mbr-article--auto-align" style='color:gray'>
+                            <p> Every change to any part, file, or document within your project is versioned and stored in the cloud any time you make an update from the web or destop app.  In addition to simple versioning, OmniBuilds fully supports git-style workflows including branches, releases, diffs, and merges.  Enjoy the freedom to experiment with alternate design paths by creating configs (branches) without having to worry about impacting the main project.  Publish named revisions once your project reaches a design milestone.  A standard naming convention is applied to configs and revisions to improve readability across projects.  Visually diff design files in both 2D and 3D views and merge project configurations with the automated merge tool.  &nbsp;
+                            </p>
+                        </div>
+                    </div>
+                 <!--    <div class="mbr-section__container">
+                        <div class="mbr-buttons mbr-buttons--auto-align"><a class="mbr-buttons__btn btn btn-lg btn-default" href="#">LEARN MORE</a></div>
+                    </div> -->
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="mbr-section mbr-section--relative mbr-parallax-background" id="value4" style='height:100vh'>
+    <div class="mbr-section__container mbr-section__container--isolated container">
+        <div class="row">
+            <br><br>
+            <div class="mbr-box mbr-box--fixed mbr-box--adapted">
+
+                
+                <div class="mbr-box__magnet mbr-class-mbr-box__magnet--center-left col-sm-5 mbr-section__right">
+                    <div class="mbr-section__container mbr-section__container--middle" style='color:3a3a3a'>
+                        <h1>
+                            CAD AGNOSTIC
+                        </h1>
+                    </div>
+                    <div class="mbr-section__container mbr-section__container--middle">
+                        <div class="mbr-article mbr-article--auto-align" style='color:gray'>
+                            <p> OmniBuilds works with any type of CAD file, or any type of file for that matter. You have the ability to associate any file you choose as a design file for your project.  This allows projects to contain Mechanical CAD, Electrical CAD, Parametric CAD, renderings, vector graphics, and the list goes on.  These files are fully versioned and may be diffed against each other in 2D or 3D, depending on the format.  Organize your assemblies directly in a signle CAD file or manage each part as a discrete CAD files and organize your project with OmniBuilds BOM tool.  You have the freedom to organize your project as you need to, without having to worry about if it will work with your CAD package or practice.
+                            	&nbsp;
+                            </p>
+                        </div>
+                    </div>
+                   <!--  <div class="mbr-section__container">
+                        <div class="mbr-buttons mbr-buttons--auto-align"><a class="mbr-buttons__btn btn btn-lg btn-default" href="#">LEARN MORE</a></div>
+                    </div> -->
+                </div>
+                <div class="mbr-box__magnet mbr-box__magnet--top-right mbr-section__left col-sm-7">
+                    <figure class="mbr-figure mbr-figure--adapted mbr-figure--caption-inside-bottom mbr-figure--full-width"><img class="mbr-figure__img" src="{% static 'omnibuilds/assets/images/cad_logos.png' %}"></figure>
+                </div>
+                
             </div>
         </div>
     </div>

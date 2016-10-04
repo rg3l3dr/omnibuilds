@@ -22,7 +22,7 @@ class SignupForm(forms.ModelForm):
             'placeholder': 'Last name'})
         self.fields['last_name'].label = ''
 
-        self.fields['email'].widget = TextInput(attrs={
+        self.fields['email'].widget = EmailInput(attrs={
             'id': 'e-mail',
             'class': 'form-control input-lg',
             'placeholder': 'Your e-mail address'})
