@@ -1,0 +1,203 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+{% load crispy_forms_tags %}
+
+{% block style %}
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+	<div class="row">
+		<div class="col-xs-3">
+			<div class='panel panel-default'>
+				<div class="panel-heading">
+					<i class="fa fa-gear text-primary" aria-hidden="true"></i>
+					&nbsp
+					Account Management
+				</div>
+				<div class="panel-body">
+					<ul class="nav nav-pills nav-stacked">
+						<li class="active"><a href="#profile" data-toggle="pill"><i class="fa fa-user"></i> &nbsp; Public Profile</a></li><!-- /.active -->
+						<li><a href="#account" data-toggle="pill"><i class="fa fa-bars"></i> &nbsp; Account Settings </a></li>
+						<li><a href="#plan" data-toggle="pill"><i class="fa fa-credit-card"></i> &nbsp; Plans & Billing </a></li>
+						<li><a href="#projects" data-toggle="pill"><i class="fa fa-folder-open-o"></i> &nbsp; Projects Owned </a></li>
+						<li><a href="#teams" data-toggle="pill"><i class="fa fa-users"></i> &nbsp; Teams Leading </a></li>
+					</ul><!-- /.nav nav-pills nav-stacked -->
+				</div>
+			</div>
+		</div><!-- /.col-xs-3 -->
+		<div class="col-xs-9">
+			<div class="tab-content">
+				<div class="tab-pane fade in active" id='profile'>
+					<div class='panel panel-default'>
+						<div class="panel-heading">
+							<i class="fa fa-user text-primary" aria-hidden="true"></i>
+							&nbsp
+							Public Profile
+						</div>
+						<div class="panel-body">
+							<form class='form'  method='POST' action='{% url "profile" %}' enctype="multipart/form-data" id='update_profile_form'>
+									<div class='form-group'>
+										{% csrf_token %}
+										{{ edituserprofileform|crispy }}
+									</div>
+									<div class='form-group'>
+										<input type='hidden' name='profile' value='edit-profile'>
+									</div>
+								    <button class='btn btn-primary' id='update_profile_btn'>
+								    	Update Profile
+								    </button>
+								</form>
+						</div>
+					</div>
+				</div><!-- /.tab-pane fade in active -->
+				<div class="tab-pane fade in " id='account'>
+					<div class='panel panel-default'>
+						<div class="panel-heading">
+							<i class="fa fa-bars text-primary" aria-hidden="true"></i>
+							&nbsp
+							Account Settings
+						</div>
+						<div class="panel-body">
+							<form class='form'  method='POST' action='{% url "profile" %}' enctype="multipart/form-data" id='update_settings_form'>
+								<div class='form-group'>
+									{% csrf_token %}
+									{{ edituseraccountform|crispy }}
+								</div>
+								<div class='form-group'>
+									<input type='hidden' name='account' value='edit-profile'>
+								</div>
+							    <button class='btn btn-primary' id='update_account_btn'>
+							    	Update Account
+							    </button>
+							</form>
+						</div>
+					</div>
+				</div><!-- /.tab-pane fade in  -->
+				<div class="tab-pane fade in " id='plan'>
+					<div class='panel panel-default'>
+						<div class="panel-heading">
+							<i class="fa fa-credit-card text-primary" aria-hidden="true"></i>
+							&nbsp
+							Plans & Billing
+						</div>
+						<div class="panel-body">
+							<form class='form' action="#" method="POST" id="payment-form">
+								<span class="payment-errors"></span>
+								{% csrf_token %}
+							 	<div class="form-group">
+							 		<label>
+							    		<span>Card Number</span>
+							      		<input type="text" class='form-control' size="20" data-stripe="number">
+							    	</label>
+							  	</div>
+							  	<div class="form-group">
+							    	<label>
+							      		<span>Expiration (MM/YY)</span>
+							      		<input type="text" class='form-control' size="2" data-stripe="exp_month">
+							    	</label>
+							    	<span> / </span>
+							    	<input type="text" class='form-control' size="2" data-stripe="exp_year">
+						  		</div>
+							  	<div class="form-group">
+							    	<label>
+							      		<span>CVC</span>
+							      		<input type="text" class='form-control' size="4" data-stripe="cvc">
+							    	</label>
+							  	</div>
+							  	<div class="form-group">
+							    	<label>
+							      		<span>Billing Zip</span>
+							      		<input type="text" class='form-control' size="6" data-stripe="address_zip">
+							    	</label>
+							  	</div>
+							  	<input type="submit" class="submit" value="Submit Payment">
+							</form>
+						</div>
+					</div>
+				</div><!-- /.tab-pane fade in  -->
+				<div class="tab-pane fade in " id='projects'>
+					<div class='panel panel-default'>
+						<div class="panel-heading">
+							<i class="fa fa-folder-open-o text-primary" aria-hidden="true"></i>
+							&nbsp
+							Projects Owned
+						</div>
+						<div class="panel-body">
+							Project Info
+							<br><br>
+						</div>
+					</div>
+				</div><!-- /.tab-pane fade in  -->
+				<div class="tab-pane fade in " id='teams'>
+					<div class='panel panel-default'>
+						<div class="panel-heading">
+							<i class="fa fa-users text-primary" aria-hidden="true"></i>
+							&nbsp
+							Teams Leading
+						</div>
+						<div class="panel-body">
+							Team Info
+							<br><br>
+						</div>
+					</div>
+				</div><!-- /.tab-pane fade in  -->
+			</div><!-- /.tab-content -->
+		</div><!-- /.col-xs-9 -->
+	</div><!-- /.row -->
+</div><!-- /.container -->
+
+
+{% endblock %}
+
+
+
+{% block script %}
+<script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+<script type="text/javascript">
+  	
+Stripe.setPublishableKey('pk_test_C0HvFMtbYemrQX7BxBWBSVQw');
+
+$(function() {
+	var $form = $('#payment-form');
+	$form.submit(function(event) {
+	    // Disable the submit button to prevent repeated clicks:
+	    $form.find('.submit').prop('disabled', true);
+
+	    // Request a token from Stripe:
+	    Stripe.card.createToken($form, stripeResponseHandler);
+
+	    // Prevent the form from being submitted:
+	    return false;
+	 	});
+	});
+
+function stripeResponseHandler(status, response) {
+	// Grab the form:
+  	var $form = $('#payment-form');
+
+	if (response.error) { // Problem!
+
+	    // Show the errors on the form:
+	    $form.find('.payment-errors').text(response.error.message);
+	    $form.find('.submit').prop('disabled', false); // Re-enable submission
+
+	} else { // Token was created!
+
+	    // Get the token ID:
+	    var token = response.id;
+
+	    // Insert the token ID into the form so it gets submitted to the server:
+	    $form.append($('<input type="hidden" name="stripeToken">').val(token));
+
+	    // Submit the form:
+	    $form.get(0).submit();
+	}
+};
+</script>
+{% endblock %}
+
+
+
+

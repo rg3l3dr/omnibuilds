@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 {% load crispy_forms_tags %}
+{% load notifications_tags %}
+
 
 {% block style %}
 {% endblock %}
@@ -10,23 +12,23 @@
 	<div class='container'>
 		<div class='row'>
 			<div class='col-xs-12 col-md-3' id='plan'>
-				Plan:  Starter &nbsp 
+				Plan:  {{user_profile.subplan}} &nbsp 
 				<a href='#'>Upgrade</a>
 			</div>
 			<div class='col-xs-12 col-md-6' id='data'>
-				 Private Data:  0 / 100 MB
+				 Private Storage:  {{user_profile.data}} / {{user_profile.data_cap}} MB &nbsp; <a href='{% url "invite" %}'>Invite friends to add storage</a>
 				 <div class="progress">
-				 	<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:0%;">
-				 		<span class="sr-only">0 % Data Used</span>
+				 	<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width:{{user_profile.data_percent}}%;">
+				 		<span class="sr-only">{{user_profile.data_percent|floatformat:"0"}} % Data Used</span>
 				 	</div>
 				 </div>
 			</div>
-			<div class='col-xs-12 col-md-3' id='credits'>
+			<!-- <div class='col-xs-12 col-md-3' id='credits'>
 				<span class='pull-right'>
 					Credits:  $0 &nbsp 
 					<a href='#'>Invite Users</a> 
 				</span>
-			</div>
+			</div> -->
 		</div>
 	</div>
 	<div class='container'>
@@ -39,14 +41,46 @@
 								<i class="fa fa-user text-primary" aria-hidden="true"></i>
 								&nbsp
 								My Profile
-								<btn class='btn btn-default btn-xs pull-right'> 
-									<i class="fa fa-gear" aria-hidden="true"></i>
-									Manage
-								</btn>
+								<a href='{% url "profile" %}'>
+									<btn class='btn btn-default btn-xs pull-right'> 
+										<i class="fa fa-gear" aria-hidden="true"></i>
+										Manage
+									</btn>
+								</a>
 							</div>
 							<div class="panel-body">
-								Update your profile
-								<br><br>
+								<p id='profile-summary'>
+									<div class='row'>
+										<div class='col-xs-2'>
+											{% if user_profile.picture %}
+												<img src='{{ user_profile.picture.url }}' style='height:40px'/>
+											{% else %}
+												<i class="fa fa-user fa-3x" aria-hidden="true"></i>
+											{% endif %}
+										</div>
+										<div class='col-xs-10'>
+											<h2 style='margin:auto'>{{user_profile}}</h2>
+										</div>
+									</div>
+									<br>
+									<div class='row'>
+										<div class='col-xs-12'>
+											{% if user_profile.public_name %}
+												<i class="fa fa-user"></i>&nbsp {{user_profile.public_name}}<br>
+											{% endif %}
+											{% if user_profile.location %}
+												<i class="fa fa-globe"></i>&nbsp Lives in {{user_profile.location}}<br>
+											{% endif %}
+											{% if user_profile.website %}
+												<i class="fa fa-link"></i>&nbsp {{ user_profile.website|urlize}}<br>
+											{% endif %}
+											{% if user_profile.public_email %}
+												<i class="fa fa-envelope-o"></i>&nbsp {{user_profile.public_email|urlize}}<br>
+											{% endif %}
+											<i class="fa fa-calendar"></i>&nbsp Joined on {{user_profile.user.date_joined|date}}<br>
+										</div>
+									</div>
+								</p>
 							</div>
 						</div>
 					</div>
@@ -117,6 +151,29 @@
 							<div class="panel-body">
 								You are not tracking any projects, organizations, or users.
 								<br><br>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class='row'>
+					<div class='col-xs-12' id='notifications'>
+						<div class='panel panel-default'>
+							<div class="panel-heading">
+								<i class="fa fa-bell-o text-primary" aria-hidden="true"></i>
+								&nbsp
+								My Notifications
+							</div>
+							<div class="panel-body">
+								{% notifications_unread as unread_count %}
+
+								{% live_notify_list %}
+
+								{% if unread_notifications %}
+									{% live_notify_list %}
+								{% else %}
+									You do not have any notifications.
+								{% endif %}
+									<br><br>
 							</div>
 						</div>
 					</div>

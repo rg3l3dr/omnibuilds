@@ -42,7 +42,7 @@ if socket.gethostname() in PROD_HOSTS:
     env = 'production'
 else:
     DEBUG = True
-    ALLOWED_HOSTS = ['stage.omnibuilds.com', '54.70.215.140']
+    ALLOWED_HOSTS = ['stage.omnibuilds.com', 'www.omnibuilds.com', '54.70.215.140']
     design_bucket = 'omnibuilds-stage-designs'
     assets_bucket = 'omnibuilds-stage-assets'
     env = 'stage'
@@ -67,10 +67,14 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
     'crispy_forms',
-    'designer',
     'guardian',
+    'invitations',
+    'notifications',
     'rest_framework',
     'storages',
+
+    # homegrown apps
+    'designer',
 ]
 
 # all auth settings
@@ -78,10 +82,20 @@ ACCOUNT_AUTHENTICATION_METHOD = "email"
 ACCOUNT_EMAIL_REQUIRED = True
 ACCOUNT_EMAIL_VERIFICATION = None
 ACCOUNT_SIGNUP_PASSWORD_ENTER_TWICE = False
-ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_SESSION_REMEMBER = True
 LOGIN_REDIRECT_URL = '/'
 SOCIALACCOUNT_EMAIL_REQUIRED = True
+
+
+# django invitations settings
+ACCOUNT_ADAPTER = 'invitations.models.InvitationsAdapter'
+INVITATIONS_INVITATION_EXPIRY = 7 # days
+INVITATIONS_INVITATION_ONLY = False
+INVITATIONS_SIGNUP_REDIRECT = 'account_signup'
+INVITATIONS_LOGIN_REDIRECT = '/'
+INVITATIONS_EMAIL_SUBJECT_PREFIX = 'Invitation to OmniBuilds'
+
 
 # Django AllAuth (social auth) settings
 SOCIALACCOUNT_PROVIDERS = \

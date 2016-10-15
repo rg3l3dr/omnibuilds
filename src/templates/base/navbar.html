@@ -1,4 +1,6 @@
 {% load staticfiles %}
+{% load notifications_tags %}
+
 
 <nav class="navbar navbar-default">
   <div class="container">
@@ -30,18 +32,25 @@
         {% if request.user.is_authenticated %}
           <li class="dropdown">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-          <!--     {% if user_profile.picture %}
+              {% if user_profile.picture %}
                 <img src='{{user_profile.picture.url}}' style='height:25px'>
               {% else %}
-                <img src='{% static "makerbuilds/img/profile_default.png" %}' style='height:25px;'>
-              {% endif %} -->
-              <i class='fa fa-user'></i>
+                <i class='fa fa-user'></i>
+              {% endif %}
               <span class="caret"></span></a>
             <ul class="dropdown-menu">
-               <li><a id="auth" href="{{ user_profile.get_absolute_url }}"><i class='fa fa-home fa-fw'></i>&nbsp {{request.user}} </a></li>
+
+
+              {% notifications_unread as unread_count %}
+
+              <li><a id="auth" href="{% url 'landing' %}"><i class='fa fa-home fa-fw'></i>&nbsp {{request.user}} 
+                {% if unread_count %}
+                  {% live_notify_badge classes="badge" %} 
+                {% endif %}
+              </a></li>
                <li><a href='#'><i class='fa fa-folder-open-o fa-fw'></i>&nbsp Create Project </a></li>
-               <li><a href='#'><i class='fa fa-sitemap fa-fw'></i>&nbsp Create Org </a></li>
-               <li><a href='#'><i class='fa fa-gear fa-fw'></i>&nbsp Account Settings </a></li>
+               <li><a href='#'><i class='fa fa-users fa-fw'></i>&nbsp Create Team </a></li>
+               <li><a href='{% url "profile" %}'><i class='fa fa-gear fa-fw'></i>&nbsp My Account </a></li>
                <li role="separator" class="divider"></li>
                <li><a id="auth" href="{% url 'account_logout' %}">Log Out</a></li>
             </ul>

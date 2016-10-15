@@ -18,13 +18,29 @@ from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
 from designer.views import *
+import notifications.urls
+from rest_framework import routers
 
+router = routers.DefaultRouter()
+router.register(r'users', UserViewSet)
+router.register(r'subplans', SubPlanViewSet)
+router.register(r'profiles', ProfileViewSet)
+router.register(r'userprofiles', UserProfileViewSet)
+router.register(r'teamprofiles', TeamProfileViewSet)
+router.register(r'projects', ProjectViewSet)
 
 urlpatterns = [
+    url(r'^$', landing, name = 'landing'),
     url(r'^admin/', admin.site.urls),
     url(r'^accounts/', include('allauth.urls')),
+    url(r'^invitations/', include('invitations.urls', namespace='invitations')),
+    url('^inbox/notifications/', include(notifications.urls, namespace='notifications')),
+    url(r'^', include(router.urls)),
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
-    url(r'^$', landing, name = 'landing'),
+    
+    url(r'^profile/$', profile, name = 'profile'),
+    url(r'^invite/$', invite, name = 'invite'),
 ]
 
 if settings.DEBUG:
