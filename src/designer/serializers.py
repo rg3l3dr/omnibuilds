@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from .models import *
 from rest_framework import serializers
+from invitations.models import Invitation
 
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
@@ -27,7 +28,18 @@ class TeamProfileSerializer(serializers.ModelSerializer):
         model = TeamProfile
         fields = '__all__'
 
+class CustomerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Customer
+        fields = '__all__'
+
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
         fields = '__all__'
+
+class InvitationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Invitation
+        fields = '__all__'
+        lookup_field = 'email'

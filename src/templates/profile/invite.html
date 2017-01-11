@@ -9,27 +9,245 @@
 
 <div class='container'>
 	<div class='row'>
-		<div class='col-xs-12'>
-		<form class='form'  method='POST' action='{% url "invite" %}'  id='send_invite_form'>
-			<div class='form-group'>
-				{% csrf_token %}
-				{{ inviteform|crispy }}
+		<div class="col-xs-3">
+			<div class='panel panel-default'>
+				<div class="panel-heading">
+					<i class="fa fa-paper-plane-o text-primary" aria-hidden="true"></i>
+					&nbsp
+					Invitations
+				</div>
+				<div class="panel-body">
+					<ul class="nav nav-pills nav-stacked">
+						<li class='active'>
+							<a href="#send" data-toggle="pill">
+								<i class="fa fa-envelope"></i> 
+								&nbsp; Send Invitations
+							</a>
+						</li><!-- /.active -->
+						<li>
+							<a href="#pending" data-toggle="pill">
+								<i class="fa fa-ellipsis-h"></i>
+								&nbsp; Pending Invitations 
+								{% if user_profile.pending_invites %}
+									<span class='badge'> 
+										{{user_profile.pending_invites|length}} 
+									</span>
+								{% endif %}
+							</a>
+						</li>
+						<li>
+							<a href="#accepted" data-toggle="pill">
+								<i class="fa fa-check"></i>
+								&nbsp; Accepted Invitations
+								{% if user_profile.accepted_invites %}
+									<span class='badge'>
+										{{user_profile.accepted_invites|length}}
+									</span>
+								{% endif %}
+							</a>
+						</li>
+					</ul><!-- /.nav nav-pills nav-stacked -->
+				</div>
 			</div>
-			<div class='form-group'>
-				<input type='hidden' name='invite' value='send-invite'>
-			</div>
-		    <button class='btn btn-primary' id='update_account_btn'>
-		    	Send Invite
-		    </button>
-		</form>
-		</div>
+		</div><!-- /.col-xs-3 -->
+		<div class="col-xs-9">
+			<div class="tab-content">
+				<div class="tab-pane fade in active" id='send'>
+					<div class='panel panel-default'>
+						<div class="panel-heading">
+							<i class="fa fa-envelope text-primary" aria-hidden="true"></i>
+							&nbsp
+							Send Invitations
+						</div>
+						<div class="panel-body">
+							<div class='col-xs-10' id='invites'>
+								<h1> Invite friends via email</h1>
+								<p class='lead'> Get 100 MB of private storage for each friend who joins </p>
+								<form class='form' method='POST' action='{% url "invite" %}'>
+									<div id='form-token'> {% csrf_token %} </div>
+									<div class='form-group' v-for='invite in invites' :key='invite.id'>
+										<label class='control-label' v-bind:id="invite.email.replace('@', 'a').replace('.', '-')" style='display:none'></label>
+										<input v-model='invite.email' type='email' class='form-control' placeholder='Enter an email' >
+									</div>
+									<input type='button' value='Add Another' class='btn btn-success' @click.prevent='addInvite'>
+									&nbsp;
+								    <input type='submit' value='Send Invites' class='btn btn-primary'  @click.prevent='sendInvites'>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div><!-- /.tab-pane fade in active -->
+				<div class="tab-pane fade in" id='pending'>
+					<div class='panel panel-default'>
+						<div class="panel-heading">
+							<i class="fa fa-ellipsis-h text-primary" aria-hidden="true"></i>
+							&nbsp
+							Pending Invitations
+						</div>
+						<div class="panel-body">
+							<table class='table'>
+								<thead>
+									<tr>
+										<th>Email</th>
+										<th>Invited On</th>
+										<th>Expired</th>
+										<th>Resend</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for invite in user_profile.pending_invites %}
+										<tr>
+											<td>{{ invite.email }}</td>
+											<td>{{invite.created|date}}</td>
+											{% if invite.expired %}
+												<td>Yes</td>
+												<td><a href='#'>Resend</a></td>
+											{% else %}
+												<td>No</td>
+												<td></td>
+											{% endif %}
+										</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div><!-- /.tab-pane fade in  -->
+				<div class="tab-pane fade in" id='accepted'>
+					<div class='panel panel-default'>
+						<div class="panel-heading">
+							<i class="fa fa-check text-primary" aria-hidden="true"></i>
+							&nbsp
+							Accepted Invitations
+						</div>
+						<div class="panel-body">
+							<table class='table'>
+								<thead>
+									<tr>
+										<th>Email</th>
+										<th>Invited On</th>
+										<th>Accepted On</th>
+										<th>Joined</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for invite in user_profile.accepted_invites %}
+										<tr>
+											<td>{{ invite.email }}</td>
+											<td>{{ invite.sent|date}}</td>
+											<td>{{ invite.created|date }}</td>
+											<td>
+												{% if invite.joined %}
+													Yes
+												{% else %}
+													No
+												{% endif %}
+											</td>
+										</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div><!-- /.tab-pane fade in  -->
+			</div><!-- /.tab-content -->
+		</div><!-- /.col-xs-9 -->
 	</div>
 </div>
-
-
-	
 
 {% endblock %}
 
 {% block script %}
+
+{{ block.super }}
+
+
+<script type="text/javascript">
+
+var csrftoken = getCookie('csrftoken');
+
+
+var myInvites = new Vue({
+	delimiters: ['[[', ']]'],
+	el: '#invites',
+	data: {
+		invites: [
+			{
+				'id': 1,
+				'email': ''
+			},
+			{
+				'id': 2,
+				'email': ''
+			},
+			{
+				'id': 3,
+				'email': ''
+			}
+		],
+	},
+	methods: {
+		addInvite: function() {
+			new_invite = {
+				'id': this.invites.length + 1,
+				'email': ''
+			}
+	        this.invites.push(new_invite);
+	    },
+	    sendInvites: function() {
+	    	emails = []
+	    	for(invite of this.invites)  {
+	    		emails.push(invite.email)
+	    	}
+
+	    	this.$http.post('/invitations/send-json-invite/', emails, {headers: {'X-CSRFTOKEN': csrftoken}}).then(function(response) {
+    			console.log(response)
+				for(var obj in response.body.invalid) {
+					var my_key = (Object.keys(response.body.invalid[obj]))
+					var new_key = JSON.stringify(my_key[0]).replace('"', '').replace('"', '');
+					var key_id = new_key.replace('@', 'a').replace('[', '').replace(']', '').replace('.', '-')
+					var value = response.body.invalid[obj][my_key]
+					$('#' + key_id).html(value);
+					$('#' + key_id).toggle()
+					$('#' + key_id).parent().addClass('has-error')
+				}
+				for(var obj in response.body.valid) {
+					var my_key = (Object.keys(response.body.valid[obj]))
+					var new_key = JSON.stringify(my_key[0]).replace('"', '').replace('"', '');
+					var key_id = new_key.replace('@', 'a').replace('[', '').replace(']', '').replace('.', '-')
+					var value = response.body.valid[obj][my_key] + ' to ' + new_key
+					$('#' + key_id).html(value);
+					$('#' + key_id).toggle()
+					$('#' + key_id).next().remove()
+					$('#' + key_id).parent().addClass('has-success')
+				}
+	    	}, function(response) {
+	    		console.log(response)
+				for(var obj in response.body.invalid) {
+					var my_key = (Object.keys(response.body.invalid[obj]))
+					var new_key = JSON.stringify(my_key[0]).replace('"', '').replace('"', '');
+					var key_id = new_key.replace('@', 'a').replace('[', '').replace(']', '').replace('.', '-')
+					var value = response.body.invalid[obj][my_key]
+					$('#' + key_id).html(value);
+					$('#' + key_id).toggle()
+					$('#' + key_id).parent().addClass('has-error')
+				}
+				for(var obj in response.body.valid) {
+					var my_key = (Object.keys(response.body.valid[obj]))
+					var new_key = JSON.stringify(my_key[0]).replace('"', '').replace('"', '');
+					var key_id = new_key.replace('@', 'a').replace('[', '').replace(']', '').replace('.', '-')
+					var value = response.body.valid[obj][my_key] + ' to ' + new_key
+					$('#' + key_id).html(value);
+					$('#' + key_id).toggle()
+					$('#' + key_id).next().remove()
+					$('#' + key_id).parent().addClass('has-success')
+				}
+	    	});
+		},
+	},
+})
+
+
+</script>
+
 {% endblock %}

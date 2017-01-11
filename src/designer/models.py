@@ -11,8 +11,7 @@ from invitations.signals import invite_accepted
 from invitations.views import AcceptInvite
 from invitations.models import Invitation
 from notifications.signals import notify
-
-
+from django.utils import timezone
 
 """ Django.contrib.auth Models
 
@@ -54,41 +53,6 @@ class Signup(models.Model):
 	beta = models.BooleanField(default=False)
 	created_at = models.DateTimeField(auto_now_add=True, auto_now=False)
 
-"""Invitations
-
-1.  User Invites a friend onto platform -> Increase user storage
-
-	-> Invite Button/Link
-		-> User Dashboard
-		-> Manage Account -> Plans & Billing
-	-> Invite form
-		-> Friend Email
-		-> Add another (advanced)
-	-> Check email, does friend already have an account?
-		-> If yes, notify the user they are already a member
-		-> Check email, has an invite already been sent for this friend by any user
-			-> If yes, notify the user than an invite has already been sent
-			-> If no, send the email
-	-> When friend creates an account
-		-> Notify the user
-		-> Add storage to the user's data plan
-
-2.  User Invites a friend onto project -> Increase user storage, add friend to project
-3.  User Invites a friend onto team -> Increase team storage, add friend to team
-
-
-"""
-# # user invites friend onto site via email
-# class Invite(models.Model):
-
-# # team leader invites teammate or guest onto team via email
-# class TeamInvite(models.Model):
-
-# class Invite(models.Model):
-# 	email = models.EmailField()
-# 	profile = models.ForeignKey(Profile)
-# 	accepted = models.BooleanField(default=False)
-
 class SubPlan(models.Model):
 	name = models.CharField(max_length=30)
 	description = models.TextField(null=True, blank=True)
@@ -115,8 +79,8 @@ class Profile(models.Model):
 	picture = models.ImageField(upload_to=profile_media_upload_location, null=True, blank=True)
 	website = models.URLField(max_length=50, null=True, blank=True)
 	subplan = models.ForeignKey(SubPlan, default=1)
-	data = models.IntegerField(default=0)
-	data_cap = models.IntegerField(default=100)
+	data = models.BigIntegerField(default=0)
+	data_cap = models.BigIntegerField(default=100000000)
 	active = models.BooleanField(default=True)
 
 	def __unicode__(self):
@@ -144,8 +108,6 @@ class Profile(models.Model):
 	3. If user creates a team a TeamProfile should be created (for each team)
 	4. When the user signs in, how do you know if they are signed in as user or team profile?
 	5. A user should never be acting as a team, only on behalf of a team, if they are a member or owner, but will need a way to track what team the user is currently logged into
-
-
 """
 # trigger events when invite is accpeted, removed since this is triggered as soon as the email link is clicked, does not confirm that the recipient actually joins the site
 # @receiver(invite_accepted, sender=AcceptInvite)
@@ -169,31 +131,60 @@ def create_user_profile(sender, created, instance, **kwargs):
 	        assign_perm('edit_profile', user_profile.user, profile)
 	        assign_perm('profile_admin', user_profile.user, profile)
 
-	        # check to see if this user was invited
-	        try:
+	        # check to see if this user was invited	        	
+        	invites = Invitation.objects.filter(email = user_profile.user.email)
+        	if invites.count() >= 1: 
 	        	# in case multiple users have invited new user, take the first invite
-	        	invite = Invitation.objects.filter(email = user_profile.user.email)[0]
+	        	invite = invites[0]
 
 	        	# increase data plan for the inviter
 	        	inviter_profile = get_object_or_404(UserProfile, user=invite.inviter)
-	        	inviter_profile.data_cap += 100
+	        	inviter_profile.data_cap += 100000000
 	        	inviter_profile.save()
 
 	        	# notify the inviter, the invitation has been accepted
 	        	notify.send(user_profile, recipient=inviter_profile.user, verb='accepted your invitation')
 
-	        except Invitation.DoesNotExist:
-	        	pass
 
 class UserProfile(Profile):
 	public_name = models.CharField(max_length=50, null=True, blank=True)
 	public_email = models.EmailField(null=True, blank=True)
+
+
 
 class TeamProfile(Profile):
 	members = models.ManyToManyField(User, related_name='team_members')
 	public = models.BooleanField(default=True)
 	created_at = models.DateTimeField()
 	last_updated = models.DateTimeField()
+
+class Customer(models.Model):
+	user_profile = models.ForeignKey(UserProfile, null=True, blank=True)
+	team_profile = models.ForeignKey(TeamProfile, null=True, blank=True)
+	sub_plan = models.ForeignKey(SubPlan)
+	stripe_customer_id = models.CharField(max_length=40)
+	card_brand = models.CharField(max_length=20)
+	card_last4 = models.CharField(max_length=5)
+	card_exp_month = models.CharField(max_length=5)
+	card_exp_year = models.CharField(max_length=5)
+	next_payment = models.DateTimeField()
+	active = models.BooleanField(default=True)
+	failed_count = models.IntegerField(default=0)
+
+	def __unicode__(self):
+		if self.user_profile:
+			return unicode(self.user_profile)
+		else:
+			return unicode(self.team_profile)
+
+class Invoice(models.Model):
+	stripe_id = models.CharField(max_length=50)
+	customer = models.ForeignKey(Customer)
+	date = models.DateTimeField()
+	amount = models.FloatField()
+	payment_method = models.CharField(max_length=50)
+	period_ending = models.DateTimeField()
+	paid = models.BooleanField()
 
 class Project(models.Model):
 	creator = models.ForeignKey(UserProfile)

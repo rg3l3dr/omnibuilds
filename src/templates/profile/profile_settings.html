@@ -18,7 +18,7 @@
 				</div>
 				<div class="panel-body">
 					<ul class="nav nav-pills nav-stacked">
-						<li class="active"><a href="#profile" data-toggle="pill"><i class="fa fa-user"></i> &nbsp; Public Profile</a></li><!-- /.active -->
+						<li><a href="#profile" data-toggle="pill"><i class="fa fa-user"></i> &nbsp; Public Profile</a></li><!-- /.active -->
 						<li><a href="#account" data-toggle="pill"><i class="fa fa-bars"></i> &nbsp; Account Settings </a></li>
 						<li><a href="#plan" data-toggle="pill"><i class="fa fa-credit-card"></i> &nbsp; Plans & Billing </a></li>
 						<li><a href="#projects" data-toggle="pill"><i class="fa fa-folder-open-o"></i> &nbsp; Projects Owned </a></li>
@@ -29,7 +29,7 @@
 		</div><!-- /.col-xs-3 -->
 		<div class="col-xs-9">
 			<div class="tab-content">
-				<div class="tab-pane fade in active" id='profile'>
+				<div class="tab-pane fade in" id='profile'>
 					<div class='panel panel-default'>
 						<div class="panel-heading">
 							<i class="fa fa-user text-primary" aria-hidden="true"></i>
@@ -38,17 +38,17 @@
 						</div>
 						<div class="panel-body">
 							<form class='form'  method='POST' action='{% url "profile" %}' enctype="multipart/form-data" id='update_profile_form'>
-									<div class='form-group'>
-										{% csrf_token %}
-										{{ edituserprofileform|crispy }}
-									</div>
-									<div class='form-group'>
-										<input type='hidden' name='profile' value='edit-profile'>
-									</div>
-								    <button class='btn btn-primary' id='update_profile_btn'>
-								    	Update Profile
-								    </button>
-								</form>
+								<div class='form-group'>
+									{% csrf_token %}
+									{{ edituserprofileform|crispy }}
+								</div>
+								<div class='form-group'>
+									<input type='hidden' name='profile' value='edit-profile'>
+								</div>
+							    <button class='btn btn-primary' id='update_profile_btn'>
+								Update Profile
+							    </button>
+							</form>
 						</div>
 					</div>
 				</div><!-- /.tab-pane fade in active -->
@@ -69,8 +69,10 @@
 									<input type='hidden' name='account' value='edit-profile'>
 								</div>
 							    <button class='btn btn-primary' id='update_account_btn'>
-							    	Update Account
+								Update Account
 							    </button>
+							    <br><br>
+							    <a href="{% url 'account_change_password' %}">Change Password</a>
 							</form>
 						</div>
 					</div>
@@ -82,39 +84,193 @@
 							&nbsp
 							Plans & Billing
 						</div>
-						<div class="panel-body">
-							<form class='form' action="#" method="POST" id="payment-form">
-								<span class="payment-errors"></span>
-								{% csrf_token %}
-							 	<div class="form-group">
-							 		<label>
-							    		<span>Card Number</span>
-							      		<input type="text" class='form-control' size="20" data-stripe="number">
-							    	</label>
-							  	</div>
-							  	<div class="form-group">
-							    	<label>
-							      		<span>Expiration (MM/YY)</span>
-							      		<input type="text" class='form-control' size="2" data-stripe="exp_month">
-							    	</label>
-							    	<span> / </span>
-							    	<input type="text" class='form-control' size="2" data-stripe="exp_year">
-						  		</div>
-							  	<div class="form-group">
-							    	<label>
-							      		<span>CVC</span>
-							      		<input type="text" class='form-control' size="4" data-stripe="cvc">
-							    	</label>
-							  	</div>
-							  	<div class="form-group">
-							    	<label>
-							      		<span>Billing Zip</span>
-							      		<input type="text" class='form-control' size="6" data-stripe="address_zip">
-							    	</label>
-							  	</div>
-							  	<input type="submit" class="submit" value="Submit Payment">
-							</form>
+						<ul class="list-group">
+							<li class="list-group-item">
+								<strong>Current Plan:</strong> {{ user_profile.subplan }} &nbsp;
+
+								<button class="btn btn-sm btn-success" v-if='user.subplan == 1' data-toggle="modal" data-target="#paymentModal">Upgrade to Individual</button>
+							</li><!-- /.list-group-item -->
+							<div class="modal fade" tabindex="-1" role="dialog" id='paymentModal'>
+							  <div class="modal-dialog" role="document">
+							    <div class="modal-content">
+								 <div class="modal-header">
+								   <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+								   <h4 class="modal-title">
+									<i class="fa fa-credit-card text-primary" aria-hidden="true"></i>
+										&nbsp
+									Payment Details
+								   </h4>
+								 </div>
+								 <div class="modal-body">
+								 	<span v-if='this.customer.active == true'>
+									 	<strong> Current Card Info </strong> <br>
+									 	[[customer.card_brand]] **** **** **** [[customer.card_last4]] Expiration: [[customer.card_exp_month]]/[[customer.card_exp_year]] <br><br>
+									 </span>
+									<form class="form-horizontal" role="form" id="payment-form">
+										{% csrf_token %}
+										<span class="payment-errors"></span>
+									    <fieldset>
+										 <div class="form-group">
+										   <label class="col-sm-3 control-label" for="#card-number">Card Number</label>
+										   <div class="col-sm-9">
+											<input v-model='card.number' type="text"  size="20" class="form-control" data-stripe="number" id='card-number' placeholder="Your credit or debit card number">
+										   </div>
+										 </div>
+										 <div class="form-group">
+										   <label class="col-sm-3 control-label" for="#expiry-month" >Expiration</label>
+										   <div class="col-sm-9">
+											<div class="row">
+											  <div class="col-xs-3">
+											    <select v-model='card.exp_month' class="form-control col-sm-2" id="expiry-month" data-stripe="exp_month" >
+												 <option>Month</option>
+												 <option value="01">Jan (01)</option>
+												 <option value="02">Feb (02)</option>
+												 <option value="03">Mar (03)</option>
+												 <option value="04">Apr (04)</option>
+												 <option value="05">May (05)</option>
+												 <option value="06">June (06)</option>
+												 <option value="07">July (07)</option>
+												 <option value="08">Aug (08)</option>
+												 <option value="09">Sep (09)</option>
+												 <option value="10">Oct (10)</option>
+												 <option value="11">Nov (11)</option>
+												 <option value="12">Dec (12)</option>
+											    </select>
+											  </div>
+											  <div class="col-xs-3">
+											    <select v-model='card.exp_year' class="form-control" id="expiry-year" data-stripe="exp_year">
+												 <option value="17">2017</option>
+												 <option value="18">2018</option>
+												 <option value="19">2019</option>
+												 <option value="20">2020</option>
+												 <option value="21">2021</option>
+												 <option value="22">2022</option>
+												 <option value="23">2023</option>
+												 <option value="23">2024</option>
+												 <option value="23">2025</option>
+												 <option value="23">2026</option>
+												 <option value="23">2027</option>
+											    </select>
+											  </div>
+											</div>
+										   </div>
+										 </div>
+										 <div class="form-group">
+										   <label class="col-sm-3 control-label" for="cvv">Card CVV</label>
+										   <div class="col-sm-3">
+											<input v-model='card.cvc' type="text" class="form-control" id="cvv" placeholder="Security Code" data-stripe='cvv'>
+										   </div>
+										 </div>
+										 <div class="form-group">
+										   <label class="col-sm-3 control-label" for="zip">Billing Zip</label>
+										   <div class="col-sm-3">
+											<input v-model='card.address_zip' type="text" size="6" class="form-control" id="zip" data-stripe="address_zip" placeholder="Zip Code">
+										   </div>
+										 </div>
+									    </fieldset>
+									  </form>
+								 </div>
+								 <div class="modal-footer">
+								   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+								   {% if user_profile.customer %}
+								   	<button type="submit" class="btn btn-success" id='submit-card' @click='submitPayment' data-dismiss="modal">Update Payment Info</button>
+								   {% else %}
+								   	<button type="submit" class="btn btn-success" id='submit-card' @click='submitPayment' data-dismiss="modal">Submit Payment</button>
+								   {% endif %}
+								 </div>
+							    </div><!-- /.modal-content -->
+							  </div><!-- /.modal-dialog -->
+							</div><!-- /.modal -->
+							<li class="list-group-item">
+								<strong>Private Storage</strong> &nbsp; [[ data_cap_fmt ]] &nbsp;
+							</li><!-- /.list-group-item -->
+							<li v-if='user.subplan != 1' class="list-group-item">
+								<strong>Billing Info: </strong> &nbsp;
+								<button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#paymentModal">Update Payment Method</button>
+								<br><br>
+								{{user_profile.customer.card_brand}} **** **** **** {{user_profile.customer.card_last4 }} Expiration: {{user_profile.customer.card_exp_month}}/{{user_profile.customer.card_exp_year}}<br>
+								Next payment due: {{user_profile.customer.next_payment|date}} <br>
+								Amount: ${{user_profile.subplan.rate}}
+							</li><!-- /.list-group-item -->
+						</ul><!-- /.list-group -->
+					</div>
+					<div class='panel panel-default' v-if='user.subplan != 1'>
+						<div class="panel-heading">
+							<i class="fa fa-minus-square text-primary" aria-hidden="true"></i>
+							&nbsp Downgrade to Free
 						</div>
+						<div class="panel-body">
+							<div class="col-xs-10">
+								You can downgrade at anytime, but you will no longer be able to access your private repositories created under this plan and your private storage will be adjusted.
+							</div><!-- /.col-xs-10 -->
+							<div class="col-xs-2">
+								<button class="btn btn-danger" data-toggle="modal" data-target="#cancelModal">
+									<i class="fa fa-minus-square" aria-hidden="true"></i>
+									Downgrade
+								</button>
+							</div><!-- /.col-xs-2 -->
+						</div><!-- /.panel-body -->
+					</div>
+
+					<div class="modal modal-danger fade" tabindex="-1" role="dialog" id='cancelModal'>
+						  <div class="modal-dialog" role="document">
+						    <div class="modal-content">
+							 <div class="modal-header">
+							   <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+							   <h4 class="modal-title">
+								Are you sure you want to cancel?
+							   </h4>
+							 </div>
+							 <div class="modal-body">
+							 	<p class='lead text-danger'>
+							 		You will no longer be able to access any private repositories created under this plan and your private storage will be reduced to normal.
+							 	</p>
+							   	{% csrf_token %}
+							 </div>
+							 <div class="modal-footer">
+							   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+							   <button class="btn btn-danger" @click='downgradePlan' data-dismiss="modal">Cancel Plan</button>
+							 </div>
+						    </div><!-- /.modal-content -->
+						  </div><!-- /.modal-dialog -->
+						</div><!-- /.modal -->
+					<div class='panel panel-default' v-if='user.subplan != 1'>
+						<div class="panel-heading">
+							<i class="fa fa-list-ol text-primary" aria-hidden="true"></i>
+							&nbsp Payment History
+						</div>
+						<table class='table'>
+							<thead >
+								<th></th>
+								<th >ID</th>
+								<th>Date</th>
+								<th>Amount</th>
+								<th>Payment Method</th>
+<!-- 								<th style='text-align:center'>Receipt</th>
+ -->							</thead>
+							<tbody>
+								{% for invoice in user_profile.invoices %}
+								<tr>
+									<td style='text-align:center'>
+										{% if invoice.paid %}
+											<i class="fa fa-check text-success fa-lg" aria-hidden="true"></i>
+										{% else %}
+											<i class="fa fa-times text-danger fa-lg" aria-hidden="true"></i>
+										{% endif %}
+									</td>
+									<td>{{ invoice.id }}</td>
+									<td>{{ invoice.date|date }}</td>
+									<td>${{ invoice.amount|floatformat }}</td>
+									<td>{{ invoice.payment_method }}</td>
+									<!-- <td style='text-align:center'>
+										<a href="#">
+											<i class="fa fa-cloud-download text-primary fa-lg" aria-hidden="true"></i>
+										</a>
+									</td> -->
+								</tr>
+								{% endfor %}
+							</tbody>
+						</table>
 					</div>
 				</div><!-- /.tab-pane fade in  -->
 				<div class="tab-pane fade in " id='projects'>
@@ -148,53 +304,159 @@
 	</div><!-- /.row -->
 </div><!-- /.container -->
 
-
 {% endblock %}
 
-
-
 {% block script %}
+
+{{ block.super }}
 <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
 <script type="text/javascript">
-  	
+
+function formatBytes(bytes,decimals) {
+   if(bytes == 0) return '0 Byte';
+   var k = 1000;
+   var dm = decimals + 1 || 3;
+   var sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+   var i = Math.floor(Math.log(bytes) / Math.log(k));
+   return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+}
+
+var csrftoken = getCookie('csrftoken');
+
+$(document).ready(function() { // load a pill from path on page load
+    var hash = window.location.hash;
+
+    if (hash) {
+	   var selectedTab = $('.nav li a[href="' + hash + '"]');
+	   selectedTab.trigger('click', true);
+	   }
+    });
+	
 Stripe.setPublishableKey('pk_test_C0HvFMtbYemrQX7BxBWBSVQw');
 
-$(function() {
-	var $form = $('#payment-form');
-	$form.submit(function(event) {
-	    // Disable the submit button to prevent repeated clicks:
-	    $form.find('.submit').prop('disabled', true);
+new Vue({
+	delimiters: ['[[', ']]'],
+	el: '#plan',
+	data: {
+		user: [],
+		customer: [],
+		card: {
+			number: '',
+			cvc: '',
+			exp_month: '',
+			exp_year: '',
+			address_zip: '',
+		},
+		invoices: [],
+	},
+	computed: {
+		data_percent: function() {
+			return (this.user.data / this.user.data_cap) * 100 ;
+		},
+		data_cap_fmt: function() {
+			return formatBytes(this.user.data_cap)
+		}
+	},
+	created: function() {
+		this.$http.get('/userprofiles/{{user_profile.id}}').then(function(response) {
+			this.user = response.data;
+		},
+		function(response) {
+			console.log(response);
+		});
 
-	    // Request a token from Stripe:
-	    Stripe.card.createToken($form, stripeResponseHandler);
+		{% if user_profile.customer %}
 
-	    // Prevent the form from being submitted:
-	    return false;
-	 	});
-	});
+			this.$http.get('/customers/{{user_profile.customer.id}}').then(function(response) {
+				this.customer = response.data;
+				}, function(response) {
+					console.log(response);
+				});
 
-function stripeResponseHandler(status, response) {
-	// Grab the form:
-  	var $form = $('#payment-form');
+		{% endif %}
 
-	if (response.error) { // Problem!
+		
+	},
+	methods: {
 
-	    // Show the errors on the form:
-	    $form.find('.payment-errors').text(response.error.message);
-	    $form.find('.submit').prop('disabled', false); // Re-enable submission
+		downgradePlan: function() {
 
-	} else { // Token was created!
+			console.log('Downgrading plan')
 
-	    // Get the token ID:
-	    var token = response.id;
+			var formData = new FormData();
+			formData.append('status', 'downgrade');
 
-	    // Insert the token ID into the form so it gets submitted to the server:
-	    $form.append($('<input type="hidden" name="stripeToken">').val(token));
+			this.$http.post('/profile/', formData, {headers: {'X-CSRFTOKEN': csrftoken}}).then(function(response) {
 
-	    // Submit the form:
-	    $form.get(0).submit();
+				// on success
+				this.$http.get('/userprofiles/{{user_profile.id}}').then(function(response) {
+					this.user = response.data;
+					this.customer.active = false;
+					console.log(response);
+				},
+					function(response) {
+						console.log(response);
+					});
+
+			}, function(response) {
+
+				// on error
+				console.log(response)
+
+			})
+		},
+
+		submitPayment: function() {
+			var $modal = $('#paymentModal');
+			// Disable the submit button to prevent repeated clicks:
+			$modal.find('#submit-card').prop('disabled', true);
+
+			// Request a token from Stripe:
+			Stripe.card.createToken(this.card, stripeResponseHandler);
+
+			function stripeResponseHandler(status, response) {
+				// Grab the form:
+				var $modal = $('#paymentModal');
+				var $form = $('#payment-form')
+
+				if (response.error) { // Problem!
+
+				    // Show the errors on the form:
+				    $form.find('.payment-errors').text(response.error.message);
+				    $modal.find('#submit-card').prop('disabled', false); // Re-enable submission
+
+				} else { // Token was created!
+
+				    // Get the token ID:
+				    var token = response.id;
+
+				    var formData = new FormData();
+				    formData.append('stripeToken', token);
+
+				    Vue.http.post('/profile/', formData, {headers: {'X-CSRFTOKEN': csrftoken}}).then(function(response) {
+
+				    		console.log(response)
+
+						// on success
+						Vue.http.get('/userprofiles/{{user_profile.id}}').then(function(response) {
+							Vue.user = response.data;
+							console.log(response);
+							console.log('Get Complete')
+							location.reload();
+						}, function(response) {
+							console.log(response);
+						});
+					}, function(response) {
+						console.log('error')
+						console.log(response)
+
+					})
+				}
+			}
+		},
 	}
-};
+});
+
 </script>
 {% endblock %}
 

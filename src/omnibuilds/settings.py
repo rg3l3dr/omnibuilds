@@ -28,7 +28,7 @@ SECRET_KEY = 'u^88fj+0x2gr5b@8i$qhhwy7r7fj5yiw62t#)&lp$6)_z3x-a2'
 SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 SECURE_SSL_REDIRECT = False
 SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = False
 SECURE_HSTS_INCLUDE_SUBDOMAINS = True
 
 SITE_ID = 1
@@ -75,7 +75,35 @@ INSTALLED_APPS = [
 
     # homegrown apps
     'designer',
+
+    # must go last (or after all aps that can generate activites)
+    'actstream',
+
+
+
 ]
+
+
+# django invitations settings
+ACCOUNT_ADAPTER = 'invitations.models.InvitationsAdapter'
+INVITATIONS_INVITATION_EXPIRY = 7 # days
+INVITATIONS_INVITATION_ONLY = False
+INVITATIONS_SIGNUP_REDIRECT = 'account_signup'
+INVITATIONS_LOGIN_REDIRECT = '/'
+INVITATIONS_EMAIL_SUBJECT_PREFIX = 'Invitation to OmniBuilds'
+INVITATIONS_ALLOW_JSON_INVITES = True
+
+# django notifications settings
+NOTIFICATIONS_SOFT_DELETE = True
+
+# django activity stream settings
+# ACTSTREAM_SETTINGS = {
+#     'MANAGER': 'designer.managers.MyActionManager',
+#     'FETCH_RELATIONS': True,
+#     'USE_PREFETCH': True,
+#     'USE_JSONFIELD': True,
+#     'GFK_FETCH_DEPTH': 1,
+# }
 
 # all auth settings
 ACCOUNT_AUTHENTICATION_METHOD = "email"
@@ -86,16 +114,6 @@ ACCOUNT_USERNAME_REQUIRED = True
 ACCOUNT_SESSION_REMEMBER = True
 LOGIN_REDIRECT_URL = '/'
 SOCIALACCOUNT_EMAIL_REQUIRED = True
-
-
-# django invitations settings
-ACCOUNT_ADAPTER = 'invitations.models.InvitationsAdapter'
-INVITATIONS_INVITATION_EXPIRY = 7 # days
-INVITATIONS_INVITATION_ONLY = False
-INVITATIONS_SIGNUP_REDIRECT = 'account_signup'
-INVITATIONS_LOGIN_REDIRECT = '/'
-INVITATIONS_EMAIL_SUBJECT_PREFIX = 'Invitation to OmniBuilds'
-
 
 # Django AllAuth (social auth) settings
 SOCIALACCOUNT_PROVIDERS = \
@@ -133,7 +151,7 @@ EMAIL_USE_TLS = True
 
 # REST framework
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAdminUser',),
+    'DEFAULT_PERMISSION_CLASSES': ('rest_framework.permissions.IsAuthenticated',),
     'PAGE_SIZE': 10
 }
 

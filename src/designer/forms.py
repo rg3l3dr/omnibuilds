@@ -91,7 +91,7 @@ class EditUserProfileForm(forms.ModelForm):
 class EditUserAccountForm(forms.ModelForm):
     class Meta:
         model = User
-        fields = [ 'username', 'email', 'password' ]
+        fields = [ 'username', 'email', ]
 
         def __init__(self, *args, **kwargs):
             super(EditUserAccountForm, self).__init__(*args, **kwargs)
@@ -108,9 +108,9 @@ class EditUserAccountForm(forms.ModelForm):
                 })
             self.fields['email'].label = 'Account Email'
 
-            self.fields['password'].widget = PasswordInput(attrs={
-                'class': 'form-control',
-                'placeholder': 'Your password to login to OmniBuilds',
-                })
-            self.fields['email'].label = 'Account Password'
+            # self.fields['password'].widget = PasswordInput(attrs={
+            #     'class': 'form-control',
+            #     'placeholder': 'Your password to login to OmniBuilds',
+            #     })
+            # self.fields['email'].label = 'Account Password'
 
